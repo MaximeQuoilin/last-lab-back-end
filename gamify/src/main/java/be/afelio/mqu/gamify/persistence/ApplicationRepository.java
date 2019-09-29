@@ -38,7 +38,7 @@ public class ApplicationRepository {
 				videogame.getEditor(), 
 				videogame.getGenre(), 
 				videogame.getPegi(), 
-				videogame.getPlatform());
+				videogame.getPlatforms());
 	}
 
 }
