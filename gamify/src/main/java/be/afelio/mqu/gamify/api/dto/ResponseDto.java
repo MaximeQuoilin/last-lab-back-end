@@ -2,7 +2,7 @@ package be.afelio.mqu.gamify.api.dto;
 
 public class ResponseDto<T> {
 
-	private ResponseDtoStatus status;
+	private String status;
 	private String message;
 	private T payload;
 	
@@ -10,7 +10,7 @@ public class ResponseDto<T> {
 	
 	public ResponseDto(ResponseDtoStatus status, String message) {
 		super();
-		this.status = status;
+		this.status = status.name();
 		this.message = message;
 	}
 
@@ -22,12 +22,12 @@ public class ResponseDto<T> {
 		this.message = message;
 	}
 
-	public ResponseDtoStatus getStatus() {
+	public String getStatus() {
 		return status;
 	}
 
 	public void setStatus(ResponseDtoStatus status) {
-		this.status = status;
+		this.status = status.name();
 	}
 
 	public T getPayload() {
