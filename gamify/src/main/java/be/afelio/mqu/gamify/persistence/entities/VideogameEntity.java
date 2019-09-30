@@ -143,5 +143,14 @@ public class VideogameEntity {
 	public void setRating(Integer rating) {
 		this.rating = rating;
 	}
+
+	public List<UserEntity> getUsers() {
+		return users;
+	}
+
+	public void setUsers(List<UserEntity> users) {
+		this.users = users;
+	}
+	
 	
 }
