@@ -152,5 +152,4 @@ public class VideogameEntity {
 		this.users = users;
 	}
 	
-	
 }

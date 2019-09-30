@@ -22,6 +22,7 @@ import be.afelio.mqu.gamify.persistence.repositories.VideogameRepository;
 
 @Component
 public class ApplicationRepository {
+	
 	@Autowired VideogameRepository videogameRepository;
 	@Autowired UserRepository userRepository;
 	
@@ -32,17 +33,11 @@ public class ApplicationRepository {
 		List<VideogameEntity> videogames = videogameRepository.findAll();
 		return dtoBuilder.createListVideoGameDto(videogames);
 	}
-
 	
-
-
-
 	public List<UserDto> findAllUser() {
 		List<UserEntity> users = userRepository.findAll();
 		return dtoBuilder.createListUsersDto(users);
 	}
-	
-	
 
 	public void createUser(CreateUserDto createUserDto) {
 		String username = createUserDto.getUsername();
@@ -70,7 +65,6 @@ public class ApplicationRepository {
 		 
 		return usersSimpleDto;
 	}
-
 
 	public VideogameDto findOneVideoGameById(Integer id) {
 		VideogameDto videogameDto = null;
