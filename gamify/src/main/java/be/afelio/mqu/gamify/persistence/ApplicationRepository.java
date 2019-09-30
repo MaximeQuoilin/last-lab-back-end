@@ -3,6 +3,8 @@ package be.afelio.mqu.gamify.persistence;
 import java.util.ArrayList;
 import java.util.List;
 
+import javax.transaction.Transactional;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
@@ -21,6 +23,7 @@ public class ApplicationRepository {
 	@Autowired VideogameRepository videogameRepository;
 	@Autowired UserRepository userRepository;
 
+	@Transactional
 	public List<VideogameDto> findAllVideogames() {
 		List<VideogameEntity> videogames = videogameRepository.findAll();
 		return createListVideoGameDto(videogames);
