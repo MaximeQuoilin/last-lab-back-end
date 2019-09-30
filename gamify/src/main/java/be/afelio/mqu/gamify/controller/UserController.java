@@ -31,9 +31,9 @@ public class UserController {
 		try {
 			List<UserDto> users = repository.findAllUser();
 			if (users == null) {
-				dto = new ResponseDto<List<UserDto>>(ResponseDtoStatus.FAILURE, " users not found");
+				dto = new ResponseDto<List<UserDto>>(ResponseDtoStatus.FAILURE, " users not found ");
 			} else {
-				dto = new ResponseDto<List<UserDto>>(ResponseDtoStatus.SUCCESS, users.size() +  "users found");
+				dto = new ResponseDto<List<UserDto>>(ResponseDtoStatus.SUCCESS, users.size() +  " users found");
 				dto.setPayload(users);
 			}
 		} catch(Exception e) {
