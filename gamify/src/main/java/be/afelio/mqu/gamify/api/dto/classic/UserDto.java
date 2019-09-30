@@ -1,4 +1,4 @@
-package be.afelio.mqu.gamify.api.dto;
+package be.afelio.mqu.gamify.api.dto.classic;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -10,15 +10,16 @@ import be.afelio.mqu.gamify.persistence.entities.VideogameEntity;
 public class UserDto {
 	private int id;
 	private String username;
-	private String password;
+	private String email;
 	private List<VideogameDto> videogames;
-	public UserDto(int id, String username, String password, List<VideogameEntity> videogames) {
+	
+	public UserDto(int id, String username, List<VideogameEntity> videogames) {
 		super();
 		this.id = id;
 		this.username = username;
-		this.password = password;
 		this.videogames = createListVideogamesDto(videogames);
 	}
+	
 	private List<VideogameDto> createListVideogamesDto(List<VideogameEntity> videogames) {
 		List<VideogameDto> videogamesDto = new ArrayList<VideogameDto>();
 		for (VideogameEntity videogameEntity : videogames) {
@@ -29,13 +30,15 @@ public class UserDto {
 		}
 		return videogamesDto;
 	}
+	
 	public UserDto() {
 		super();
 	}
+	
 	public UserDto(UserEntity userEntity) {
 		this.id = userEntity.getId();
 		this.username = userEntity.getUsername();
-		this.password = userEntity.getPassword();
+		this.setEmail(userEntity.getEmail());
 		this.videogames = createListVideogamesDto(userEntity.getVideogames());
 	}
 	public int getId() {
@@ -50,22 +53,26 @@ public class UserDto {
 	public void setUsername(String username) {
 		this.username = username;
 	}
-	public String getPassword() {
-		return password;
-	}
-	public void setPassword(String password) {
-		this.password = password;
-	}
 	public List<VideogameDto> getVideogames() {
 		return videogames;
 	}
 	public void setVideogames(List<VideogameDto> videogames) {
 		this.videogames = videogames;
 	}
+
+	public String getEmail() {
+		return email;
+	}
+
+	public void setEmail(String email) {
+		this.email = email;
+	}
+
 	@Override
 	public int hashCode() {
-		return Objects.hash(id, password, username, videogames);
+		return Objects.hash(email, id, username, videogames);
 	}
+
 	@Override
 	public boolean equals(Object obj) {
 		if (this == obj)
@@ -75,7 +82,7 @@ public class UserDto {
 		if (getClass() != obj.getClass())
 			return false;
 		UserDto other = (UserDto) obj;
-		return id == other.id && Objects.equals(password, other.password) && Objects.equals(username, other.username)
+		return Objects.equals(email, other.email) && id == other.id && Objects.equals(username, other.username)
 				&& Objects.equals(videogames, other.videogames);
 	}
 	

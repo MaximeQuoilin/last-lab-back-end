@@ -12,10 +12,10 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 
-import be.afelio.mqu.gamify.api.dto.CreateUserDto;
 import be.afelio.mqu.gamify.api.dto.ResponseDto;
 import be.afelio.mqu.gamify.api.dto.ResponseDtoStatus;
-import be.afelio.mqu.gamify.api.dto.UserDto;
+import be.afelio.mqu.gamify.api.dto.classic.UserDto;
+import be.afelio.mqu.gamify.api.dto.create.CreateUserDto;
 import be.afelio.mqu.gamify.persistence.ApplicationRepository;
 
 @Controller
@@ -50,7 +50,7 @@ public class UserController {
 		
 		try {
 			repository.createUser(createUserDto);
-			dto = new ResponseDto<Void>(ResponseDtoStatus.SUCCESS, "album created");
+			dto = new ResponseDto<Void>(ResponseDtoStatus.SUCCESS, "user created");
 		} catch(Exception e) {
 			e.printStackTrace();
 			dto = new ResponseDto<Void>(ResponseDtoStatus.FAILURE, "unexpected exception");

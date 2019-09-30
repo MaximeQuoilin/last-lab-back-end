@@ -196,7 +196,8 @@ ALTER SEQUENCE public.platform_id_seq OWNED BY public.platform.id;
 CREATE TABLE public.tuser (
     id bigint NOT NULL,
     username character varying(75) NOT NULL,
-    password character varying(30) NOT NULL
+    password character varying(30) NOT NULL,
+    email character varying(150)
 );
 
 
@@ -346,8 +347,8 @@ INSERT INTO public.has_pegi (videogame_id, pegi_id) VALUES (21, 2);
 -- Data for Name: owns; Type: TABLE DATA; Schema: public; Owner: postgres
 --
 
-INSERT INTO public.owns (user_id, videogame_id) VALUES (1, 1);
-INSERT INTO public.owns (user_id, videogame_id) VALUES (2, 2);
+INSERT INTO public.owns (user_id, videogame_id) VALUES (1, 20);
+INSERT INTO public.owns (user_id, videogame_id) VALUES (2, 21);
 
 
 --
@@ -374,8 +375,10 @@ INSERT INTO public.platform (id, name) VALUES (6, 'Nintendo Switch');
 -- Data for Name: tuser; Type: TABLE DATA; Schema: public; Owner: postgres
 --
 
-INSERT INTO public.tuser (id, username, password) VALUES (1, 'ticus', 'pullo');
-INSERT INTO public.tuser (id, username, password) VALUES (2, 'yokel', 'tarmac');
+INSERT INTO public.tuser (id, username, password, email) VALUES (1, 'ticus', 'pullo', 'tpullo@coliseum.rom');
+INSERT INTO public.tuser (id, username, password, email) VALUES (2, 'yokel', 'tarmac', 'yokelta@sheh.sm');
+INSERT INTO public.tuser (id, username, password, email) VALUES (3, 'maximus', 'decimus', 'maximus@coliseum.rom');
+INSERT INTO public.tuser (id, username, password, email) VALUES (4, 'romanosaure', 'romrom', 'rom@coliseum.rom');
 
 
 --
@@ -418,7 +421,7 @@ SELECT pg_catalog.setval('public.platform_id_seq', 6, true);
 -- Name: user_id_seq; Type: SEQUENCE SET; Schema: public; Owner: postgres
 --
 
-SELECT pg_catalog.setval('public.user_id_seq', 2, true);
+SELECT pg_catalog.setval('public.user_id_seq', 4, true);
 
 
 --

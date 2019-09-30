@@ -4,6 +4,7 @@ import java.util.List;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
@@ -27,7 +28,10 @@ public class UserEntity {
 	@Column(name="password")
 	private String password;
 	
-	@ManyToMany
+	@Column(name="email")
+	private String email;
+	
+	@ManyToMany(fetch=FetchType.LAZY)
 	@JoinTable(
 			name="owns",
 			joinColumns=@JoinColumn(name="user_id"),
@@ -45,17 +49,18 @@ public class UserEntity {
 	public UserEntity() {
 	}
 
-	public UserEntity(String username, String password) {
+	public UserEntity(String username, String password, String email) {
+		super();
 		this.username = username;
 		this.password = password;
-		this.videogames = null;
+		this.email = email;
 	}
 
-	public int getId() {
+	public Integer getId() {
 		return id;
 	}
 
-	public void setId(int id) {
+	public void setId(Integer id) {
 		this.id = id;
 	}
 
@@ -82,5 +87,15 @@ public class UserEntity {
 	public void setVideogames(List<VideogameEntity> videogames) {
 		this.videogames = videogames;
 	}
+
+	public String getEmail() {
+		return email;
+	}
+
+	public void setEmail(String email) {
+		this.email = email;
+	}
+	
+	
 	
 }

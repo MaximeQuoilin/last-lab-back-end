@@ -30,6 +30,9 @@ public class VideogameEntity {
 	@Column(name="description")
 	private String description;
 	
+	@Column(name="rating")
+	private Integer rating;
+	
 	@ManyToOne
 	@JoinColumn(name="editor")
 	private EditorEntity editor;
@@ -38,7 +41,7 @@ public class VideogameEntity {
 	@JoinColumn(name="genre")
 	private GenreEntity genre;
 	
-	@ManyToMany()
+	@ManyToMany
 	@JoinTable(
 			name="has_pegi",
 			joinColumns=@JoinColumn(name="videogame_id"),
@@ -53,6 +56,15 @@ public class VideogameEntity {
 			inverseJoinColumns=@JoinColumn(name="platform_id")
 			)
 	private List<PlatformEntity> platforms;
+	
+	@ManyToMany(fetch=FetchType.LAZY)
+	@JoinTable(
+			name="owns",
+			joinColumns=@JoinColumn(name="videogame_id"),
+			inverseJoinColumns=@JoinColumn(name="user_id")
+			)
+	private List<UserEntity> users;
+	
 	
 	public VideogameEntity() {	}
 
@@ -122,6 +134,22 @@ public class VideogameEntity {
 
 	public void setPlatform(List<PlatformEntity> platforms) {
 		this.platforms = platforms;
+	}
+
+	public Integer getRating() {
+		return rating;
+	}
+
+	public void setRating(Integer rating) {
+		this.rating = rating;
+	}
+
+	public List<UserEntity> getUsers() {
+		return users;
+	}
+
+	public void setUsers(List<UserEntity> users) {
+		this.users = users;
 	}
 	
 }
