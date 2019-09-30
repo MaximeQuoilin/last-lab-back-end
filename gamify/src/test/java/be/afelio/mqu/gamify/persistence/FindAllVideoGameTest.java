@@ -11,7 +11,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.context.junit4.SpringRunner;
 
-import be.afelio.mqu.gamify.api.dto.VideogameDto;
+import be.afelio.mqu.gamify.api.dto.classic.VideogameDto;
 
 @RunWith(SpringRunner.class)
 @SpringBootTest()

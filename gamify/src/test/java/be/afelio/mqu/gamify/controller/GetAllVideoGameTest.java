@@ -20,7 +20,7 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 
 import be.afelio.mqu.gamify.api.dto.ResponseDto;
 import be.afelio.mqu.gamify.api.dto.ResponseDtoStatus;
-import be.afelio.mqu.gamify.api.dto.VideogameDto;
+import be.afelio.mqu.gamify.api.dto.classic.VideogameDto;
 
 
 
