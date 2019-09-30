@@ -17,7 +17,6 @@ import be.afelio.mqu.gamify.persistence.ApplicationRepository;
 
 
 @Controller
-
 @RequestMapping(value="videogame")
 public class VideogameController {
 	@Autowired ApplicationRepository repository;

@@ -8,6 +8,7 @@ import be.afelio.mqu.gamify.persistence.entities.EditorEntity;
 import be.afelio.mqu.gamify.persistence.entities.GenreEntity;
 import be.afelio.mqu.gamify.persistence.entities.PegiEntity;
 import be.afelio.mqu.gamify.persistence.entities.PlatformEntity;
+import be.afelio.mqu.gamify.persistence.entities.VideogameEntity;
 
 public class VideogameDto {
 
@@ -42,6 +43,16 @@ public class VideogameDto {
 			platformsDto = null;
 		}
 		return platformsDto;
+	}
+	
+	public VideogameDto(VideogameEntity videogameEntity) {
+		this.id = videogameEntity.getId();
+		this.name = videogameEntity.getName();
+		this.description = videogameEntity.getDescription();
+		this.editor = new EditorDto(editor.getId(), editor.getName());
+		this.genre = new GenreDto(genre.getId(), genre.getName());
+		this.pegis = createLisPegitDto(videogameEntity.getPegi());
+		this.platforms = createListPlatformDto(videogameEntity.getPlatforms());
 	}
 
 	private List<PegiDto> createLisPegitDto(List<PegiEntity> pegis) {
