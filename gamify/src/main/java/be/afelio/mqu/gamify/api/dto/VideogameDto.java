@@ -49,8 +49,8 @@ public class VideogameDto {
 		this.id = videogameEntity.getId();
 		this.name = videogameEntity.getName();
 		this.description = videogameEntity.getDescription();
-		this.editor = new EditorDto(editor.getId(), editor.getName());
-		this.genre = new GenreDto(genre.getId(), genre.getName());
+		this.editor = new EditorDto(videogameEntity.getEditor().getId(), videogameEntity.getEditor().getName());
+		this.genre = new GenreDto(videogameEntity.getGenre().getId(), videogameEntity.getGenre().getName());
 		this.pegis = createLisPegitDto(videogameEntity.getPegi());
 		this.platforms = createListPlatformDto(videogameEntity.getPlatforms());
 	}

@@ -38,7 +38,7 @@ public class VideogameEntity {
 	@JoinColumn(name="genre")
 	private GenreEntity genre;
 	
-	@ManyToMany()
+	@ManyToMany
 	@JoinTable(
 			name="has_pegi",
 			joinColumns=@JoinColumn(name="videogame_id"),
