@@ -4,7 +4,6 @@ import java.util.List;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
-import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
@@ -29,6 +28,9 @@ public class VideogameEntity {
 	
 	@Column(name="description")
 	private String description;
+	
+	@Column(name="rating")
+	private Integer rating;
 	
 	@ManyToOne
 	@JoinColumn(name="editor")
@@ -122,6 +124,14 @@ public class VideogameEntity {
 
 	public void setPlatform(List<PlatformEntity> platforms) {
 		this.platforms = platforms;
+	}
+
+	public Integer getRating() {
+		return rating;
+	}
+
+	public void setRating(Integer rating) {
+		this.rating = rating;
 	}
 	
 }

@@ -27,6 +27,9 @@ public class UserEntity {
 	@Column(name="password")
 	private String password;
 	
+	@Column(name="email")
+	private String email;
+	
 	@ManyToMany
 	@JoinTable(
 			name="owns",
@@ -45,17 +48,18 @@ public class UserEntity {
 	public UserEntity() {
 	}
 
-	public UserEntity(String username, String password) {
+	public UserEntity(String username, String password, String email) {
+		super();
 		this.username = username;
 		this.password = password;
-		this.videogames = null;
+		this.email = email;
 	}
 
-	public int getId() {
+	public Integer getId() {
 		return id;
 	}
 
-	public void setId(int id) {
+	public void setId(Integer id) {
 		this.id = id;
 	}
 
@@ -82,5 +86,15 @@ public class UserEntity {
 	public void setVideogames(List<VideogameEntity> videogames) {
 		this.videogames = videogames;
 	}
+
+	public String getEmail() {
+		return email;
+	}
+
+	public void setEmail(String email) {
+		this.email = email;
+	}
+	
+	
 	
 }

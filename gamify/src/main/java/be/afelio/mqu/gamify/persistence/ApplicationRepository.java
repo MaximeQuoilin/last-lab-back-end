@@ -8,9 +8,9 @@ import javax.transaction.Transactional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
-import be.afelio.mqu.gamify.api.dto.CreateUserDto;
-import be.afelio.mqu.gamify.api.dto.UserDto;
-import be.afelio.mqu.gamify.api.dto.VideogameDto;
+import be.afelio.mqu.gamify.api.dto.classic.UserDto;
+import be.afelio.mqu.gamify.api.dto.classic.VideogameDto;
+import be.afelio.mqu.gamify.api.dto.create.CreateUserDto;
 import be.afelio.mqu.gamify.api.exceptions.DuplicatedUsernameException;
 import be.afelio.mqu.gamify.api.exceptions.InvalidParametrersException;
 import be.afelio.mqu.gamify.persistence.entities.UserEntity;
@@ -45,6 +45,7 @@ public class ApplicationRepository {
 				videogame.getId(), 
 				videogame.getName(), 
 				videogame.getDescription(), 
+				videogame.getRating(),
 				videogame.getEditor(), 
 				videogame.getGenre(), 
 				videogame.getPegi(), 
@@ -71,14 +72,16 @@ public class ApplicationRepository {
 	public void createUser(CreateUserDto createUserDto) {
 		String username = createUserDto.getUsername();
 		String password = createUserDto.getPassword();
+		String email = createUserDto.getEmail();
 		
-		if (username == null || username.isBlank() || password == null || password.isBlank()) {
+		if (username == null || username.isBlank() || password == null || password.isBlank() 
+				|| email == null || email.isBlank()) {
 			throw new InvalidParametrersException();
 		}
 		if (userRepository.findOneByUsername(username) != null) {
 			throw new DuplicatedUsernameException();
 		}
-		UserEntity user = new UserEntity(username, password);
+		UserEntity user = new UserEntity(username, password, email);
 		
 		userRepository.save(user);
 	}

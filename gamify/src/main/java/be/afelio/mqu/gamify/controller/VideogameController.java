@@ -12,7 +12,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 
 import be.afelio.mqu.gamify.api.dto.ResponseDto;
 import be.afelio.mqu.gamify.api.dto.ResponseDtoStatus;
-import be.afelio.mqu.gamify.api.dto.VideogameDto;
+import be.afelio.mqu.gamify.api.dto.classic.VideogameDto;
 import be.afelio.mqu.gamify.persistence.ApplicationRepository;
 
 

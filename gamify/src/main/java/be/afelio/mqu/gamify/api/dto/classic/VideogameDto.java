@@ -1,4 +1,4 @@
-package be.afelio.mqu.gamify.api.dto;
+package be.afelio.mqu.gamify.api.dto.classic;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -15,6 +15,7 @@ public class VideogameDto {
 	private int id;
 	private String name;
 	private String description;
+	private Integer rating;
 	private EditorDto editor;
 	private GenreDto genre;
 	private List<PegiDto> pegis;
@@ -22,12 +23,13 @@ public class VideogameDto {
 	
 	public VideogameDto() {}
 
-	public VideogameDto(int id, String name, String description, EditorEntity editor, GenreEntity genre, List<PegiEntity> pegis,
+	public VideogameDto(int id, String name, String description, Integer rating, EditorEntity editor, GenreEntity genre, List<PegiEntity> pegis,
 			List<PlatformEntity> platforms) {
 		super();
 		this.id = id;
 		this.name = name;
 		this.description = description;
+		this.setRating(rating);
 		this.editor = new EditorDto(editor.getId(), editor.getName());
 		this.genre = new GenreDto(genre.getId(), genre.getName());
 		this.pegis = createLisPegitDto(pegis);
@@ -49,6 +51,7 @@ public class VideogameDto {
 		this.id = videogameEntity.getId();
 		this.name = videogameEntity.getName();
 		this.description = videogameEntity.getDescription();
+		this.setRating(videogameEntity.getRating());
 		this.editor = new EditorDto(videogameEntity.getEditor().getId(), videogameEntity.getEditor().getName());
 		this.genre = new GenreDto(videogameEntity.getGenre().getId(), videogameEntity.getGenre().getName());
 		this.pegis = createLisPegitDto(videogameEntity.getPegi());
@@ -139,6 +142,14 @@ public class VideogameDto {
 		return Objects.equals(description, other.description) && Objects.equals(editor, other.editor)
 				&& Objects.equals(genre, other.genre) && id == other.id && Objects.equals(name, other.name)
 				&& Objects.equals(pegis, other.pegis) && Objects.equals(platforms, other.platforms);
+	}
+
+	public Integer getRating() {
+		return rating;
+	}
+
+	public void setRating(Integer rating) {
+		this.rating = rating;
 	}
 	
 }

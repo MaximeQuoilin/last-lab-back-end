@@ -1,4 +1,4 @@
-package be.afelio.mqu.gamify.api.dto;
+package be.afelio.mqu.gamify.api.dto.classic;
 
 import java.util.Objects;
 
