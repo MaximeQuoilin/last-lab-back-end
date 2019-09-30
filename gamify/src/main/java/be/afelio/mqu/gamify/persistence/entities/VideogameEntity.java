@@ -4,6 +4,7 @@ import java.util.List;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
@@ -55,6 +56,15 @@ public class VideogameEntity {
 			inverseJoinColumns=@JoinColumn(name="platform_id")
 			)
 	private List<PlatformEntity> platforms;
+	
+	@ManyToMany(fetch=FetchType.LAZY)
+	@JoinTable(
+			name="owns",
+			joinColumns=@JoinColumn(name="videogame_id"),
+			inverseJoinColumns=@JoinColumn(name="user_id")
+			)
+	private List<UserEntity> users;
+	
 	
 	public VideogameEntity() {	}
 
