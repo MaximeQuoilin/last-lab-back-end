@@ -9,6 +9,7 @@ import be.afelio.mqu.gamify.api.dto.simple.UserSimpleDto;
 import be.afelio.mqu.gamify.persistence.entities.UserEntity;
 import be.afelio.mqu.gamify.persistence.entities.VideogameEntity;
 
+
 public class DtoBuilder {
 	public List<VideogameDto> createListVideoGameDto(List<VideogameEntity> videogames) {
 		List<VideogameDto> videogamesDto = new ArrayList<VideogameDto>();

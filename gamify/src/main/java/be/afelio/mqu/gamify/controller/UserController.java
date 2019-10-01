@@ -18,11 +18,14 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import be.afelio.mqu.gamify.api.dto.ResponseDto;
 import be.afelio.mqu.gamify.api.dto.ResponseDtoStatus;
 import be.afelio.mqu.gamify.api.dto.classic.UserDto;
+import be.afelio.mqu.gamify.api.dto.create.AddNewGameToUserDto;
 import be.afelio.mqu.gamify.api.dto.create.CreateUserDto;
 import be.afelio.mqu.gamify.api.dto.update.UpdateUserDto;
 import be.afelio.mqu.gamify.api.exceptions.DuplicatedEmailException;
 import be.afelio.mqu.gamify.api.exceptions.DuplicatedUsernameException;
+import be.afelio.mqu.gamify.api.exceptions.UserAlreadyOwnsGameException;
 import be.afelio.mqu.gamify.api.exceptions.UserNotFoundException;
+import be.afelio.mqu.gamify.api.exceptions.VideogameNotFoundException;
 import be.afelio.mqu.gamify.persistence.ApplicationRepository;
 
 @Controller
@@ -52,7 +55,32 @@ public class UserController {
 		return ResponseEntity.ok(dto);
 	}
 
-	@PostMapping(produces = MediaType.APPLICATION_JSON_VALUE, consumes = MediaType.APPLICATION_JSON_VALUE)
+	@PostMapping(value="add-game", produces = MediaType.APPLICATION_JSON_VALUE, consumes = MediaType.APPLICATION_JSON_VALUE)
+	public ResponseEntity<ResponseDto<Void>> addGameToUser(@RequestBody AddNewGameToUserDto addNewGameToUserDto) {
+		ResponseDto<Void> dto = null;
+
+		try {
+			repository.addNewGameToUserDto(addNewGameToUserDto);
+			dto = new ResponseDto<Void>(ResponseDtoStatus.SUCCESS, "relation created");
+		}
+		catch (UserNotFoundException e) {
+			dto = new ResponseDto<Void>(ResponseDtoStatus.FAILURE, "user not found");
+		}
+		catch (VideogameNotFoundException e) {
+			dto = new ResponseDto<Void>(ResponseDtoStatus.FAILURE, "videogame not found");
+		}
+		catch (UserAlreadyOwnsGameException e) {
+			dto = new ResponseDto<Void>(ResponseDtoStatus.FAILURE, "User already own that game");
+		}
+		catch (Exception e) {
+			e.printStackTrace();
+			dto = new ResponseDto<Void>(ResponseDtoStatus.FAILURE, "unexpected exception");
+		}
+
+		return ResponseEntity.ok(dto);
+	}
+
+	@PostMapping(value="", produces = MediaType.APPLICATION_JSON_VALUE, consumes = MediaType.APPLICATION_JSON_VALUE)
 	public ResponseEntity<ResponseDto<Void>> createUser(@RequestBody CreateUserDto createUserDto) {
 		ResponseDto<Void> dto = null;
 

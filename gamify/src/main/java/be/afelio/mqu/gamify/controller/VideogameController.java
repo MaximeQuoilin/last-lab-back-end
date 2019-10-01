@@ -54,7 +54,7 @@ public class VideogameController {
 		ResponseDto<List<VideogameDto>> dto = null;
 		try {
 			List<VideogameDto> videogames = repository.findAllVideogames();
-			if (videogames == null) {
+			if (videogames.isEmpty()) {
 				dto = new ResponseDto<List<VideogameDto>>(ResponseDtoStatus.FAILURE, " videogames not found");
 			} else {
 				dto = new ResponseDto<List<VideogameDto>>(ResponseDtoStatus.SUCCESS, videogames.size() +  "videogames found");
@@ -76,12 +76,12 @@ public class VideogameController {
 		ResponseDto<List<UserSimpleDto>> dto = null;
 		try {
 			List<UserSimpleDto> users = repository.findAllUsersForOneVideoGame(id);
-			if (users == null) {
-				dto = new ResponseDto<List<UserSimpleDto>>(ResponseDtoStatus.FAILURE, "users not found");
+			if (users.isEmpty()) {
+				dto = new ResponseDto<List<UserSimpleDto>>(ResponseDtoStatus.SUCCESS, "no user for that game");
 			} else {
 				dto = new ResponseDto<List<UserSimpleDto>>(ResponseDtoStatus.SUCCESS, users.size() +  " users found");
-				dto.setPayload(users);
 			}
+			dto.setPayload(users);
 		} catch(Exception e) {
 			dto = new ResponseDto<List<UserSimpleDto>>(ResponseDtoStatus.FAILURE, "unexpected exception");
 			e.printStackTrace();
@@ -101,7 +101,7 @@ public class VideogameController {
 			if (users == null) {
 				dto = new ResponseDto<VideogameDto>(ResponseDtoStatus.FAILURE, "videogame not found");
 			} else {
-				dto = new ResponseDto<VideogameDto>(ResponseDtoStatus.SUCCESS, " videogame found");
+				dto = new ResponseDto<VideogameDto>(ResponseDtoStatus.SUCCESS, "videogame found");
 				dto.setPayload(users);
 			}
 		} catch(Exception e) {

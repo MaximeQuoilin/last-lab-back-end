@@ -11,6 +11,7 @@ import org.springframework.stereotype.Component;
 
 import be.afelio.mqu.gamify.api.dto.classic.UserDto;
 import be.afelio.mqu.gamify.api.dto.classic.VideogameDto;
+import be.afelio.mqu.gamify.api.dto.create.AddNewGameToUserDto;
 import be.afelio.mqu.gamify.api.dto.create.CreateUserDto;
 import be.afelio.mqu.gamify.api.dto.create.CreateVideogameDto;
 import be.afelio.mqu.gamify.api.dto.simple.UserSimpleDto;
@@ -24,6 +25,7 @@ import be.afelio.mqu.gamify.api.exceptions.InvalidParametersException;
 import be.afelio.mqu.gamify.api.exceptions.InvalidParametrersException;
 import be.afelio.mqu.gamify.api.exceptions.InvalidPegiException;
 import be.afelio.mqu.gamify.api.exceptions.InvalidPlatformException;
+import be.afelio.mqu.gamify.api.exceptions.UserAlreadyOwnsGameException;
 import be.afelio.mqu.gamify.api.exceptions.UserNotFoundException;
 import be.afelio.mqu.gamify.api.exceptions.VideogameNotFoundException;
 import be.afelio.mqu.gamify.controller.VideogameControllerRepository;
@@ -87,6 +89,11 @@ public class ApplicationRepository implements VideogameControllerRepository{
 	}
 
 	public List<UserSimpleDto> findAllUsersForOneVideoGame(Integer id) {
+		
+		if (id == null || id < 1) {
+			throw new InvalidParameterException();
+		}
+		
 		VideogameEntity videogame = videogameRepository.findOneById(id);
 		List<UserSimpleDto> usersSimpleDto = null;
 		if (videogame != null) {
@@ -201,6 +208,33 @@ public class ApplicationRepository implements VideogameControllerRepository{
 		
 		user.setUsername(username);
 		user.setEmail(email);
+		userRepository.save(user);
+		
+	}
+
+	public void addNewGameToUserDto(AddNewGameToUserDto addNewGameToUserDto) {
+		String nameGame = addNewGameToUserDto.getNameGame();
+		String nameUser = addNewGameToUserDto.getNameUser();
+		
+		if (nameGame != null || nameGame.isBlank() || nameUser != null || nameUser.isBlank()) {
+			throw new InvalidParameterException();
+		}
+		
+		VideogameEntity game = videogameRepository.findOneByNameIgnoreCase(nameGame);
+		if (game == null) {
+			throw new VideogameNotFoundException();
+		}
+		
+		UserEntity user = userRepository.findOneByUsernameIgnoreCase(nameUser);
+		if (user == null) {
+			throw new UserNotFoundException();
+		}
+		
+		if (user.getVideogames().contains(game)) {
+			throw new UserAlreadyOwnsGameException();
+		}
+		
+		user.getVideogames().add(game);
 		userRepository.save(user);
 		
 	}
