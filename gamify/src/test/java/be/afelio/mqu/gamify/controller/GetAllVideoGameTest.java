@@ -48,8 +48,7 @@ public class GetAllVideoGameTest {
 		
 		List<VideogameDto> actual = responseDto.getPayload();
 		assertTrue(actual.size() == 2);
-		assertEquals(actual, createVideogameDto());
-		
+		assertEquals(actual, createVideogameDto());	
 	}
 	
 	List<VideogameDto> createVideogameDto() {
