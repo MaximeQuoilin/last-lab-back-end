@@ -38,7 +38,7 @@ public class GetAllVideoGameTest {
 	@Test
 	public void test() throws Exception {
 		ResponseEntity<String> response = restTemplate.getForEntity("/videogame/all", String.class);
-		//assertEquals(200, response.getStatusCode());
+		assertEquals(200, response.getStatusCodeValue());
 		
 		String json = response.getBody();
 		TypeReference<ResponseDto<List<VideogameDto>>> type = new TypeReference<ResponseDto<List<VideogameDto>>>() {};
