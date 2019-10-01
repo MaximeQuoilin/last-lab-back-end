@@ -22,6 +22,8 @@ import be.afelio.mqu.gamify.api.exceptions.InvalidParametersException;
 import be.afelio.mqu.gamify.api.exceptions.InvalidParametrersException;
 import be.afelio.mqu.gamify.api.exceptions.InvalidPegiException;
 import be.afelio.mqu.gamify.api.exceptions.InvalidPlatformException;
+import be.afelio.mqu.gamify.api.exceptions.UserNotFoundException;
+import be.afelio.mqu.gamify.api.exceptions.VideogameNotFoundException;
 import be.afelio.mqu.gamify.controller.VideogameControllerRepository;
 import be.afelio.mqu.gamify.persistence.entities.EditorEntity;
 import be.afelio.mqu.gamify.persistence.entities.GenreEntity;
@@ -157,6 +159,17 @@ public class ApplicationRepository implements VideogameControllerRepository{
 	@Override
 	public void deleteVideogame(Integer id) {
 		VideogameEntity videogame = videogameRepository.findOneById(id);
+		if (videogame == null) {
+			throw new VideogameNotFoundException();
+		}
 		videogameRepository.delete(videogame);
+	}
+
+	public void deleteUser(Integer id) {
+		UserEntity user = userRepository.findOneById(id);
+		if (user == null) {
+			throw new UserNotFoundException();
+		}
+		userRepository.delete(user);
 	}
 }

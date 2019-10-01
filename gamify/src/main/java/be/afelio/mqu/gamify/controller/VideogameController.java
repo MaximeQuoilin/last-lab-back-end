@@ -19,6 +19,7 @@ import be.afelio.mqu.gamify.api.dto.classic.VideogameDto;
 import be.afelio.mqu.gamify.api.dto.create.CreateVideogameDto;
 import be.afelio.mqu.gamify.api.dto.simple.UserSimpleDto;
 import be.afelio.mqu.gamify.api.exceptions.DuplicateVideogameException;
+import be.afelio.mqu.gamify.api.exceptions.VideogameNotFoundException;
 
 @Controller
 @RequestMapping(value="videogame")
@@ -111,15 +112,19 @@ public class VideogameController {
 		return ResponseEntity.ok(dto);
 	}
 	@DeleteMapping(value="{id}", produces=MediaType.APPLICATION_JSON_VALUE)
-	public ResponseEntity<ResponseDto> deleteVideogame(
+	public ResponseEntity<ResponseDto<Void>> deleteVideogame(
 			@PathVariable("id") Integer id) {
-		ResponseDto dto = null;
+		ResponseDto<Void> dto = null;
 		
 		try {
 			repository.deleteVideogame(id);
-			dto = new ResponseDto(ResponseDtoStatus.SUCCESS, "videogame deleted");
-		} catch(Exception e) {
-			dto = new ResponseDto(ResponseDtoStatus.FAILURE, "unexpected exception");
+			dto = new ResponseDto<Void>(ResponseDtoStatus.SUCCESS, "videogame deleted");
+		} 
+		catch (VideogameNotFoundException e) {
+			dto = new ResponseDto<Void>(ResponseDtoStatus.FAILURE, "videogame not found");
+		}
+		catch(Exception e) {
+			dto = new ResponseDto<Void>(ResponseDtoStatus.FAILURE, "unexpected exception");
 		}
 		
 		return ResponseEntity.ok(dto);
