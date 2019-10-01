@@ -5,10 +5,13 @@ import java.util.Objects;
 import be.afelio.mqu.gamify.persistence.entities.UserEntity;
 
 public class UserSimpleDto {
+	private Integer id;
 	private String username;
 	private String email;
-	public UserSimpleDto(String username, String email) {
+	
+	public UserSimpleDto(Integer id, String username, String email) {
 		super();
+		this.id = id;
 		this.username = username;
 		this.email = email;
 	}
@@ -18,6 +21,7 @@ public class UserSimpleDto {
 	}
 
 	public UserSimpleDto(UserEntity userEntity) {
+		this.id = userEntity.getId();
 		this.username = userEntity.getUsername();
 		this.email = userEntity.getEmail();
 	}
@@ -53,6 +57,14 @@ public class UserSimpleDto {
 			return false;
 		UserSimpleDto other = (UserSimpleDto) obj;
 		return Objects.equals(email, other.email) && Objects.equals(username, other.username);
+	}
+
+	public Integer getId() {
+		return id;
+	}
+
+	public void setId(Integer id) {
+		this.id = id;
 	}
 	
 	

@@ -12,6 +12,7 @@ public class AddNewGameToUserDto {
 		this.nameUser = nameUser;
 		this.nameGame = nameGame;
 	}
+	
 	public String getNameUser() {
 		return nameUser;
 	}
