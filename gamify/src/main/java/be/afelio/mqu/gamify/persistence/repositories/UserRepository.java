@@ -6,10 +6,10 @@ import be.afelio.mqu.gamify.persistence.entities.UserEntity;
 
 public interface UserRepository extends JpaRepository<UserEntity, Integer>{
 
-	UserEntity findOneByUsername(String username);
-
-	UserEntity findOneByEmail(String email);
-
 	UserEntity findOneById(Integer id);
+
+	UserEntity findOneByEmailIgnoreCase(String email);
+
+	UserEntity findOneByUsernameIgnoreCase(String username);
 
 }

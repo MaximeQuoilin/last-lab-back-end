@@ -1,5 +1,6 @@
 package be.afelio.mqu.gamify.persistence;
 
+import java.security.InvalidParameterException;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -13,6 +14,7 @@ import be.afelio.mqu.gamify.api.dto.classic.VideogameDto;
 import be.afelio.mqu.gamify.api.dto.create.CreateUserDto;
 import be.afelio.mqu.gamify.api.dto.create.CreateVideogameDto;
 import be.afelio.mqu.gamify.api.dto.simple.UserSimpleDto;
+import be.afelio.mqu.gamify.api.dto.update.UpdateUserDto;
 import be.afelio.mqu.gamify.api.exceptions.DuplicatedEmailException;
 import be.afelio.mqu.gamify.api.exceptions.DuplicateVideogameException;
 import be.afelio.mqu.gamify.api.exceptions.DuplicatedUsernameException;
@@ -73,10 +75,10 @@ public class ApplicationRepository implements VideogameControllerRepository{
 				|| email == null || email.isBlank()) {
 			throw new InvalidParametrersException();
 		}
-		if (userRepository.findOneByUsername(username) != null) {
+		if (userRepository.findOneByUsernameIgnoreCase(username) != null) {
 			throw new DuplicatedUsernameException();
 		}
-		if (userRepository.findOneByEmail(email) != null) {
+		if (userRepository.findOneByEmailIgnoreCase(email) != null) {
 			throw new DuplicatedEmailException();
 		}
 		UserEntity user = new UserEntity(username, password, email);
@@ -171,5 +173,35 @@ public class ApplicationRepository implements VideogameControllerRepository{
 			throw new UserNotFoundException();
 		}
 		userRepository.delete(user);
+	}
+
+	public void updateUser(UpdateUserDto updateUserDto) {
+		
+		Integer id = updateUserDto.getId();
+		String username = updateUserDto.getUsername();
+		String email = updateUserDto.getEmail();
+
+		if (id == null || id < 1 || username == null || username.isBlank() || email == null || email.isBlank()) {
+			throw new InvalidParameterException();
+		}
+		UserEntity user = userRepository.findOneById(id);
+		if (user == null) {
+			throw new UserNotFoundException();
+		}
+		UserEntity tempUser = userRepository.findOneByUsernameIgnoreCase(username);
+		if (tempUser != user && tempUser != null) {
+			throw new DuplicatedUsernameException();
+		}
+		tempUser = userRepository.findOneByEmailIgnoreCase(email);
+		System.out.println("temp user : " + tempUser);
+		System.out.println("user : " + user);
+		if (tempUser != user && tempUser != null) {
+			throw new DuplicatedEmailException();
+		}
+		
+		user.setUsername(username);
+		user.setEmail(email);
+		userRepository.save(user);
+		
 	}
 }
