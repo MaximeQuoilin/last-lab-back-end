@@ -15,10 +15,6 @@ public class UserSimpleDto {
 		this.username = username;
 		this.email = email;
 	}
-	
-	public UserSimpleDto() {
-		super();
-	}
 
 	public UserSimpleDto(UserEntity userEntity) {
 		this.id = userEntity.getId();

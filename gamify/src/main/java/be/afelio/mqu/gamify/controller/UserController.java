@@ -55,6 +55,7 @@ public class UserController {
 		return ResponseEntity.ok(dto);
 	}
 
+	@CrossOrigin(origins = "http://localhost:4200")
 	@PostMapping(value="add-game", produces = MediaType.APPLICATION_JSON_VALUE, consumes = MediaType.APPLICATION_JSON_VALUE)
 	public ResponseEntity<ResponseDto<Void>> addGameToUser(@RequestBody AddNewGameToUserDto addNewGameToUserDto) {
 		ResponseDto<Void> dto = null;
@@ -80,6 +81,7 @@ public class UserController {
 		return ResponseEntity.ok(dto);
 	}
 
+	@CrossOrigin(origins = "http://localhost:4200")
 	@PostMapping(value="", produces = MediaType.APPLICATION_JSON_VALUE, consumes = MediaType.APPLICATION_JSON_VALUE)
 	public ResponseEntity<ResponseDto<Void>> createUser(@RequestBody CreateUserDto createUserDto) {
 		ResponseDto<Void> dto = null;
@@ -99,6 +101,7 @@ public class UserController {
 		return ResponseEntity.ok(dto);
 	}
 
+	@CrossOrigin(origins = "http://localhost:4200")
 	@DeleteMapping(value = "{id}", produces = MediaType.APPLICATION_JSON_VALUE)
 	public ResponseEntity<ResponseDto<Void>> deleteUser(@PathVariable("id") Integer id) {
 		ResponseDto<Void> dto = null;
@@ -111,10 +114,10 @@ public class UserController {
 		} catch (Exception e) {
 			dto = new ResponseDto<Void>(ResponseDtoStatus.FAILURE, "unexpected exception");
 		}
-
 		return ResponseEntity.ok(dto);
 	}
 
+	@CrossOrigin(origins = "http://localhost:4200")
 	@PutMapping(produces = MediaType.APPLICATION_JSON_VALUE, consumes = MediaType.APPLICATION_JSON_VALUE)
 	public ResponseEntity<ResponseDto<Void>> updateCustomerEmail(@RequestBody UpdateUserDto updateUserDto) {
 		ResponseDto<Void> dto = null;
