@@ -19,7 +19,6 @@ import be.afelio.mqu.gamify.api.dto.classic.VideogameDto;
 import be.afelio.mqu.gamify.api.dto.create.CreateVideogameDto;
 import be.afelio.mqu.gamify.api.dto.simple.UserSimpleDto;
 import be.afelio.mqu.gamify.api.exceptions.DuplicateVideogameException;
-import be.afelio.software_academy.spring_mvc.example.dvdrental.persistence.exceptions.CustomerNotFoundException;
 
 @Controller
 @RequestMapping(value="videogame")
