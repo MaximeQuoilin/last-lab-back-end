@@ -151,5 +151,13 @@ public class VideogameDto {
 	public void setRating(Integer rating) {
 		this.rating = rating;
 	}
+
+	@Override
+	public String toString() {
+		return "VideogameDto [id=" + id + ", name=" + name + ", description=" + description + ", rating=" + rating
+				+ ", editor=" + editor + ", genre=" + genre + ", pegis=" + pegis + ", platforms=" + platforms + "]";
+	}
+	
+	
 	
 }
