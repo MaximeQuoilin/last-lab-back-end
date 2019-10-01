@@ -1,6 +1,6 @@
 package be.afelio.mqu.gamify.api.exceptions;
 
-public class DuplicateEmailException extends RuntimeException {
+public class DuplicatedEmailException extends RuntimeException {
 
 	/**
 	 * 

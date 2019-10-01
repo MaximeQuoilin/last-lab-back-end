@@ -13,7 +13,7 @@ import be.afelio.mqu.gamify.api.dto.classic.VideogameDto;
 import be.afelio.mqu.gamify.api.dto.create.CreateUserDto;
 import be.afelio.mqu.gamify.api.dto.create.CreateVideogameDto;
 import be.afelio.mqu.gamify.api.dto.simple.UserSimpleDto;
-import be.afelio.mqu.gamify.api.exceptions.DuplicateEmailException;
+import be.afelio.mqu.gamify.api.exceptions.DuplicatedEmailException;
 import be.afelio.mqu.gamify.api.exceptions.DuplicateVideogameException;
 import be.afelio.mqu.gamify.api.exceptions.DuplicatedUsernameException;
 import be.afelio.mqu.gamify.api.exceptions.InvalidEditorException;
@@ -75,7 +75,7 @@ public class ApplicationRepository implements VideogameControllerRepository{
 			throw new DuplicatedUsernameException();
 		}
 		if (userRepository.findOneByEmail(email) != null) {
-			throw new DuplicateEmailException();
+			throw new DuplicatedEmailException();
 		}
 		UserEntity user = new UserEntity(username, password, email);
 		

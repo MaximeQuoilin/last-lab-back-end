@@ -16,6 +16,8 @@ import be.afelio.mqu.gamify.api.dto.ResponseDto;
 import be.afelio.mqu.gamify.api.dto.ResponseDtoStatus;
 import be.afelio.mqu.gamify.api.dto.classic.UserDto;
 import be.afelio.mqu.gamify.api.dto.create.CreateUserDto;
+import be.afelio.mqu.gamify.api.exceptions.DuplicatedEmailException;
+import be.afelio.mqu.gamify.api.exceptions.DuplicatedUsernameException;
 import be.afelio.mqu.gamify.persistence.ApplicationRepository;
 
 @Controller
@@ -36,7 +38,8 @@ public class UserController {
 				dto = new ResponseDto<List<UserDto>>(ResponseDtoStatus.SUCCESS, users.size() +  " users found");
 				dto.setPayload(users);
 			}
-		} catch(Exception e) {
+		} 
+		catch(Exception e) {
 			dto = new ResponseDto<List<UserDto>>(ResponseDtoStatus.FAILURE, "unexpected exception");
 			e.printStackTrace();
 		}
@@ -51,7 +54,14 @@ public class UserController {
 		try {
 			repository.createUser(createUserDto);
 			dto = new ResponseDto<Void>(ResponseDtoStatus.SUCCESS, "user created");
-		} catch(Exception e) {
+		}
+		catch (DuplicatedUsernameException e) {
+			dto = new ResponseDto<Void>(ResponseDtoStatus.FAILURE, "Duplicated username");
+		}
+		catch (DuplicatedEmailException e) {
+			dto = new ResponseDto<Void>(ResponseDtoStatus.FAILURE, "Duplicated email");
+		}
+		catch(Exception e) {
 			e.printStackTrace();
 			dto = new ResponseDto<Void>(ResponseDtoStatus.FAILURE, "unexpected exception");
 		}
