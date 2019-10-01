@@ -7,6 +7,7 @@ import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.CrossOrigin;
+import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -18,6 +19,7 @@ import be.afelio.mqu.gamify.api.dto.classic.VideogameDto;
 import be.afelio.mqu.gamify.api.dto.create.CreateVideogameDto;
 import be.afelio.mqu.gamify.api.dto.simple.UserSimpleDto;
 import be.afelio.mqu.gamify.api.exceptions.DuplicateVideogameException;
+import be.afelio.software_academy.spring_mvc.example.dvdrental.persistence.exceptions.CustomerNotFoundException;
 
 @Controller
 @RequestMapping(value="videogame")
@@ -105,6 +107,20 @@ public class VideogameController {
 		} catch(Exception e) {
 			dto = new ResponseDto<VideogameDto>(ResponseDtoStatus.FAILURE, "unexpected exception");
 			e.printStackTrace();
+		}
+		
+		return ResponseEntity.ok(dto);
+	}
+	@DeleteMapping(value="{id}", produces=MediaType.APPLICATION_JSON_VALUE)
+	public ResponseEntity<ResponseDto> deleteVideogame(
+			@PathVariable("id") Integer id) {
+		ResponseDto dto = null;
+		
+		try {
+			repository.deleteVideogame(id);
+			dto = new ResponseDto(ResponseDtoStatus.SUCCESS, "videogame deleted");
+		} catch(Exception e) {
+			dto = new ResponseDto(ResponseDtoStatus.FAILURE, "unexpected exception");
 		}
 		
 		return ResponseEntity.ok(dto);

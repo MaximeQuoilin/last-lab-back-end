@@ -16,4 +16,6 @@ public interface VideogameControllerRepository {
 
 	VideogameDto findOneVideoGameById(Integer id);
 
+	void deleteVideogame(Integer id);
+
 }

@@ -153,4 +153,10 @@ public class ApplicationRepository implements VideogameControllerRepository{
 		}
 		return listPegiEntity;
 	}
+
+	@Override
+	public void deleteVideogame(Integer id) {
+		VideogameEntity videogame = videogameRepository.findOneById(id);
+		videogameRepository.delete(videogame);
+	}
 }
