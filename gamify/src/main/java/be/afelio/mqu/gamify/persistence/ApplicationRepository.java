@@ -216,7 +216,7 @@ public class ApplicationRepository implements VideogameControllerRepository{
 		String nameGame = addNewGameToUserDto.getNameGame();
 		String nameUser = addNewGameToUserDto.getNameUser();
 		
-		if (nameGame != null || nameGame.isBlank() || nameUser != null || nameUser.isBlank()) {
+		if (nameGame == null || nameGame.isBlank() || nameUser == null || nameUser.isBlank()) {
 			throw new InvalidParameterException();
 		}
 		
