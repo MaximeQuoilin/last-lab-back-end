@@ -1,4 +1,4 @@
-package be.afelio.mqu.gamify.api.dto.dtoBuilder;
+package be.afelio.mqu.gamify.utils;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -8,6 +8,7 @@ import be.afelio.mqu.gamify.api.dto.classic.VideogameDto;
 import be.afelio.mqu.gamify.api.dto.simple.UserSimpleDto;
 import be.afelio.mqu.gamify.persistence.entities.UserEntity;
 import be.afelio.mqu.gamify.persistence.entities.VideogameEntity;
+
 
 public class DtoBuilder {
 	public List<VideogameDto> createListVideoGameDto(List<VideogameEntity> videogames) {

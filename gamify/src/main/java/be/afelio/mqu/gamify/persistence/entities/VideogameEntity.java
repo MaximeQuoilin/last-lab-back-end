@@ -80,6 +80,19 @@ public class VideogameEntity {
 		this.platforms = platforms;
 	}
 
+	
+
+	public VideogameEntity(String name, String description, EditorEntity editor,
+			GenreEntity genre, List<PegiEntity> pegis, List<PlatformEntity> platforms) {
+		super();
+		this.name = name;
+		this.description = description;
+		this.editor = editor;
+		this.genre = genre;
+		this.pegis = pegis;
+		this.platforms = platforms;
+	}
+
 	public int getId() {
 		return id;
 	}

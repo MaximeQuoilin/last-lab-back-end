@@ -6,4 +6,6 @@ import be.afelio.mqu.gamify.persistence.entities.VideogameEntity;
 public interface VideogameRepository extends JpaRepository<VideogameEntity, Integer> {
 
 	VideogameEntity findOneById(Integer id);
+
+	VideogameEntity findOneByNameIgnoreCase(String name);
 }

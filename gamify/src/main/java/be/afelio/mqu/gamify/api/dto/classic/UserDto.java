@@ -31,10 +31,6 @@ public class UserDto {
 		return videogamesDto;
 	}
 	
-	public UserDto() {
-		super();
-	}
-	
 	public UserDto(UserEntity userEntity) {
 		this.id = userEntity.getId();
 		this.username = userEntity.getUsername();
