@@ -16,18 +16,18 @@ import be.afelio.mqu.gamify.api.dto.create.CreateUserDto;
 import be.afelio.mqu.gamify.api.dto.create.CreateVideogameDto;
 import be.afelio.mqu.gamify.api.dto.simple.UserSimpleDto;
 import be.afelio.mqu.gamify.api.dto.update.UpdateUserDto;
-import be.afelio.mqu.gamify.api.exceptions.DuplicatedEmailException;
-import be.afelio.mqu.gamify.api.exceptions.DuplicateVideogameException;
-import be.afelio.mqu.gamify.api.exceptions.DuplicatedUsernameException;
-import be.afelio.mqu.gamify.api.exceptions.InvalidEditorException;
-import be.afelio.mqu.gamify.api.exceptions.InvalidGenreException;
-import be.afelio.mqu.gamify.api.exceptions.InvalidParametersException;
-import be.afelio.mqu.gamify.api.exceptions.InvalidParametrersException;
-import be.afelio.mqu.gamify.api.exceptions.InvalidPegiException;
-import be.afelio.mqu.gamify.api.exceptions.InvalidPlatformException;
 import be.afelio.mqu.gamify.api.exceptions.UserAlreadyOwnsGameException;
-import be.afelio.mqu.gamify.api.exceptions.UserNotFoundException;
-import be.afelio.mqu.gamify.api.exceptions.VideogameNotFoundException;
+import be.afelio.mqu.gamify.api.exceptions.duplicate.DuplicateVideogameException;
+import be.afelio.mqu.gamify.api.exceptions.duplicate.DuplicatedEmailException;
+import be.afelio.mqu.gamify.api.exceptions.duplicate.DuplicatedUsernameException;
+import be.afelio.mqu.gamify.api.exceptions.invalid.InvalidEditorException;
+import be.afelio.mqu.gamify.api.exceptions.invalid.InvalidGenreException;
+import be.afelio.mqu.gamify.api.exceptions.invalid.InvalidParametersException;
+import be.afelio.mqu.gamify.api.exceptions.invalid.InvalidParametrersException;
+import be.afelio.mqu.gamify.api.exceptions.invalid.InvalidPegiException;
+import be.afelio.mqu.gamify.api.exceptions.invalid.InvalidPlatformException;
+import be.afelio.mqu.gamify.api.exceptions.notFound.UserNotFoundException;
+import be.afelio.mqu.gamify.api.exceptions.notFound.VideogameNotFoundException;
 import be.afelio.mqu.gamify.controller.VideogameControllerRepository;
 import be.afelio.mqu.gamify.persistence.entities.EditorEntity;
 import be.afelio.mqu.gamify.persistence.entities.GenreEntity;
@@ -39,13 +39,13 @@ import be.afelio.mqu.gamify.persistence.repositories.EditorRepository;
 import be.afelio.mqu.gamify.persistence.repositories.GenreRepository;
 import be.afelio.mqu.gamify.persistence.repositories.PegiRepository;
 import be.afelio.mqu.gamify.persistence.repositories.PlatformRepository;
+import be.afelio.mqu.gamify.persistence.repositories.UserControllerRepository;
 import be.afelio.mqu.gamify.persistence.repositories.UserRepository;
 import be.afelio.mqu.gamify.persistence.repositories.VideogameRepository;
 import be.afelio.mqu.gamify.utils.DtoBuilder;
-import be.afelio.mqu.gamify.utils.EntityBuilder;
 
 @Component
-public class ApplicationRepository implements VideogameControllerRepository{
+public class ApplicationRepository implements VideogameControllerRepository, UserControllerRepository{
 	
 	@Autowired VideogameRepository videogameRepository;
 	@Autowired UserRepository userRepository;
@@ -55,8 +55,7 @@ public class ApplicationRepository implements VideogameControllerRepository{
 	@Autowired PlatformRepository platformRepository;
 	
 	DtoBuilder dtoBuilder = new DtoBuilder();
-	EntityBuilder entityBuilder = new EntityBuilder();
-
+	
 	@Transactional
 	public List<VideogameDto> findAllVideogames() {
 		List<VideogameEntity> videogames = videogameRepository.findAll();

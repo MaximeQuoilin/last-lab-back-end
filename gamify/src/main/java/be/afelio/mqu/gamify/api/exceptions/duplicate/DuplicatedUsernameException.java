@@ -1,4 +1,4 @@
-package be.afelio.mqu.gamify.api.exceptions;
+package be.afelio.mqu.gamify.api.exceptions.duplicate;
 
 public class DuplicatedUsernameException extends RuntimeException {
 

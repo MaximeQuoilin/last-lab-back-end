@@ -1,4 +1,4 @@
-package be.afelio.mqu.gamify.api.exceptions;
+package be.afelio.mqu.gamify.api.exceptions.invalid;
 
 public class InvalidEditorException extends RuntimeException {
 

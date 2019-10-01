@@ -18,14 +18,15 @@ import be.afelio.mqu.gamify.api.dto.ResponseDtoStatus;
 import be.afelio.mqu.gamify.api.dto.classic.VideogameDto;
 import be.afelio.mqu.gamify.api.dto.create.CreateVideogameDto;
 import be.afelio.mqu.gamify.api.dto.simple.UserSimpleDto;
-import be.afelio.mqu.gamify.api.exceptions.DuplicateVideogameException;
-import be.afelio.mqu.gamify.api.exceptions.VideogameNotFoundException;
+import be.afelio.mqu.gamify.api.exceptions.duplicate.DuplicateVideogameException;
+import be.afelio.mqu.gamify.api.exceptions.notFound.VideogameNotFoundException;
 
 @Controller
 @RequestMapping(value="videogame")
 public class VideogameController {
 	@Autowired VideogameControllerRepository repository;
 	
+	@CrossOrigin(origins = "http://localhost:4200")
 	@PostMapping(produces=MediaType.APPLICATION_JSON_VALUE, consumes=MediaType.APPLICATION_JSON_VALUE)
 	public ResponseEntity<ResponseDto<Void>>  createUser(
 			@RequestBody CreateVideogameDto createVideogameDto
@@ -111,6 +112,8 @@ public class VideogameController {
 		
 		return ResponseEntity.ok(dto);
 	}
+	
+	@CrossOrigin(origins = "http://localhost:4200")
 	@DeleteMapping(value="{id}", produces=MediaType.APPLICATION_JSON_VALUE)
 	public ResponseEntity<ResponseDto<Void>> deleteVideogame(
 			@PathVariable("id") Integer id) {
@@ -129,4 +132,5 @@ public class VideogameController {
 		
 		return ResponseEntity.ok(dto);
 	}
+	
 }
