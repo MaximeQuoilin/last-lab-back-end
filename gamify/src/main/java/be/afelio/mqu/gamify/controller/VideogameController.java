@@ -9,18 +9,41 @@ import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import be.afelio.mqu.gamify.api.dto.ResponseDto;
 import be.afelio.mqu.gamify.api.dto.ResponseDtoStatus;
 import be.afelio.mqu.gamify.api.dto.classic.VideogameDto;
+import be.afelio.mqu.gamify.api.dto.create.CreateVideogameDto;
 import be.afelio.mqu.gamify.api.dto.simple.UserSimpleDto;
-import be.afelio.mqu.gamify.persistence.ApplicationRepository;
-
+import be.afelio.mqu.gamify.api.exceptions.DuplicateVideogameException;
 
 @Controller
 @RequestMapping(value="videogame")
 public class VideogameController {
-	@Autowired ApplicationRepository repository;
+	@Autowired VideogameControllerRepository repository;
+	
+	@PostMapping(produces=MediaType.APPLICATION_JSON_VALUE, consumes=MediaType.APPLICATION_JSON_VALUE)
+	public ResponseEntity<ResponseDto<Void>>  createUser(
+			@RequestBody CreateVideogameDto createVideogameDto
+			) {
+		ResponseDto<Void> dto = null;
+		
+		try {
+			repository.createVideogame(createVideogameDto);
+			dto = new ResponseDto<Void>(ResponseDtoStatus.SUCCESS, "videogame created");
+		} 
+		catch(DuplicateVideogameException e) {
+			dto = new ResponseDto<Void>(ResponseDtoStatus.FAILURE, "Ce jeu video existe déjà !");
+		}
+		catch(Exception e) {
+			e.printStackTrace();
+			dto = new ResponseDto<Void>(ResponseDtoStatus.FAILURE, "unexpected exception");
+		}
+		
+		return ResponseEntity.ok(dto);
+	}
 	
 	@CrossOrigin(origins = "http://localhost:4200")
 	@GetMapping(value="all", produces=MediaType.APPLICATION_JSON_VALUE)

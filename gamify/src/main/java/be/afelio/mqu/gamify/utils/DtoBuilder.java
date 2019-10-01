@@ -1,4 +1,4 @@
-package be.afelio.mqu.gamify.api.dto.dtoBuilder;
+package be.afelio.mqu.gamify.utils;
 
 import java.util.ArrayList;
 import java.util.List;

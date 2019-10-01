@@ -4,24 +4,24 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
 
-public class CreateVideoGameDto {
+public class CreateVideogameDto {
 	
 	private String name;
 	private String description;
-	private Integer rating;
 	private String editor;
 	private String genre;
 	private List<String> pegis;
 	private List<String> platforms;
-	public CreateVideoGameDto(String name, String description, Integer rating, String editor, String genre,
+	public CreateVideogameDto(String name, String description, String editor, String genre,
 			String[] pegis, String[] platforms) {
 		super();
 		this.name = name;
 		this.description = description;
-		this.rating = rating;
 		this.editor = editor;
 		this.genre = genre;
-		this.pegis = transformTabToList(pegis);
+		if (pegis.length > 0) {
+			this.pegis = transformTabToList(pegis);
+		}
 		this.platforms = transformTabToList(platforms);
 	}
 	private List<String> transformTabToList(String[] tabString) {
@@ -34,7 +34,7 @@ public class CreateVideoGameDto {
 		}
 		return list;
 	}
-	public CreateVideoGameDto() {
+	public CreateVideogameDto() {
 		super();
 	}
 	public String getName() {
@@ -48,12 +48,6 @@ public class CreateVideoGameDto {
 	}
 	public void setDescription(String description) {
 		this.description = description;
-	}
-	public Integer getRating() {
-		return rating;
-	}
-	public void setRating(Integer rating) {
-		this.rating = rating;
 	}
 	public String getEditor() {
 		return editor;
@@ -82,7 +76,7 @@ public class CreateVideoGameDto {
 	}
 	@Override
 	public int hashCode() {
-		return Objects.hash(description, editor, genre, name, pegis, platforms, rating);
+		return Objects.hash(description, editor, genre, name, pegis, platforms);
 	}
 	@Override
 	public boolean equals(Object obj) {
@@ -92,11 +86,10 @@ public class CreateVideoGameDto {
 			return false;
 		if (getClass() != obj.getClass())
 			return false;
-		CreateVideoGameDto other = (CreateVideoGameDto) obj;
+		CreateVideogameDto other = (CreateVideogameDto) obj;
 		return Objects.equals(description, other.description) && Objects.equals(editor, other.editor)
 				&& Objects.equals(genre, other.genre) && Objects.equals(name, other.name)
-				&& Objects.equals(pegis, other.pegis) && Objects.equals(platforms, other.platforms)
-				&& Objects.equals(rating, other.rating);
+				&& Objects.equals(pegis, other.pegis) && Objects.equals(platforms, other.platforms);
 	}
 	
 
