@@ -31,13 +31,16 @@ public class DeleteUserTest {
 	@Autowired UserRepository userRepository;
 	@Autowired Utils utils;
 	
+	
+	
 	@Test
 	public void test() {
 		UserEntity user = userRepository.findOneByUsername("ticus");
 		
-		RequestEntity<UserDto> requestEntity 
-		= new RequestEntity<UserDto>(userDto, HttpMethod.DELETE, URI.create("/"));
 		
+		RequestEntity<UserDto> requestEntity 
+		= new RequestEntity<UserDto>(user, HttpMethod.DELETE, URI.create("/"));
+
 	
 	}
 }
