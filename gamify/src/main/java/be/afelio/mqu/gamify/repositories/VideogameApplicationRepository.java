@@ -5,8 +5,8 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
-import be.afelio.mqu.gamify.api.dto.classic.VideogameDto;
 import be.afelio.mqu.gamify.api.dto.create.CreateVideogameDto;
+import be.afelio.mqu.gamify.api.dto.total.VideogameDto;
 import be.afelio.mqu.gamify.api.exceptions.duplicate.DuplicateVideogameException;
 import be.afelio.mqu.gamify.api.exceptions.invalid.InvalidEditorException;
 import be.afelio.mqu.gamify.api.exceptions.invalid.InvalidGenreException;
@@ -96,6 +96,7 @@ public class VideogameApplicationRepository implements VideogameApplicationRepos
 
 	@Override
 	public VideogameEntity findOneById(Integer id) {
+		// TODO Better to throw exception here ? 
 		return videogameRepository.findOneById(id);
 	}
 

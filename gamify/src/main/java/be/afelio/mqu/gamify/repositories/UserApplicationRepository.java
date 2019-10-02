@@ -4,11 +4,12 @@ import java.security.InvalidParameterException;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Component;
 
-import be.afelio.mqu.gamify.api.dto.classic.UserDto;
 import be.afelio.mqu.gamify.api.dto.create.AddNewGameToUserDto;
 import be.afelio.mqu.gamify.api.dto.create.CreateUserDto;
 import be.afelio.mqu.gamify.api.dto.simple.UserSimpleDto;
+import be.afelio.mqu.gamify.api.dto.total.UserDto;
 import be.afelio.mqu.gamify.api.dto.update.UpdateUserDto;
 import be.afelio.mqu.gamify.api.exceptions.UserAlreadyOwnsGameException;
 import be.afelio.mqu.gamify.api.exceptions.duplicate.DuplicatedEmailException;
@@ -23,6 +24,7 @@ import be.afelio.mqu.gamify.repositories.interfaces.UserApplicationRepositoryInt
 import be.afelio.mqu.gamify.repositories.interfaces.VideogameApplicationRepositoryInterface;
 import be.afelio.mqu.gamify.utils.DtoBuilder;
 
+@Component
 public class UserApplicationRepository implements UserApplicationRepositoryInterface {
 
 	@Autowired UserRepository userRepository;
@@ -73,6 +75,9 @@ public class UserApplicationRepository implements UserApplicationRepositoryInter
 		}
 		
 		VideogameEntity videogame = videogameApplicationRepository.findOneById(id);
+		if (videogame== null) {
+			throw new VideogameNotFoundException();
+		}
 		List<UserSimpleDto> usersSimpleDto = null;
 		if (videogame != null) {
 			usersSimpleDto = dtoBuilder.createListUsersSimpleDto(videogame.getUsers());

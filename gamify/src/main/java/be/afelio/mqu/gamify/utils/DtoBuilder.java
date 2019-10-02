@@ -3,9 +3,9 @@ package be.afelio.mqu.gamify.utils;
 import java.util.ArrayList;
 import java.util.List;
 
-import be.afelio.mqu.gamify.api.dto.classic.UserDto;
-import be.afelio.mqu.gamify.api.dto.classic.VideogameDto;
 import be.afelio.mqu.gamify.api.dto.simple.UserSimpleDto;
+import be.afelio.mqu.gamify.api.dto.total.UserDto;
+import be.afelio.mqu.gamify.api.dto.total.VideogameDto;
 import be.afelio.mqu.gamify.persistence.entities.UserEntity;
 import be.afelio.mqu.gamify.persistence.entities.VideogameEntity;
 

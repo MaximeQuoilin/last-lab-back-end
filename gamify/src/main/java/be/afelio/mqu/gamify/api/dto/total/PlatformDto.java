@@ -1,17 +1,16 @@
-package be.afelio.mqu.gamify.api.dto.classic;
+package be.afelio.mqu.gamify.api.dto.total;
 
 import java.util.Objects;
 
-public class EditorDto {
-
+public class PlatformDto {
 	private int id;
 	private String name;
-	public EditorDto(int id, String name) {
+	public PlatformDto(int id, String name) {
 		super();
 		this.id = id;
 		this.name = name;
 	}
-	public EditorDto() {
+	public PlatformDto() {
 		super();
 	}
 	public int getId() {
@@ -38,8 +37,9 @@ public class EditorDto {
 			return false;
 		if (getClass() != obj.getClass())
 			return false;
-		EditorDto other = (EditorDto) obj;
+		PlatformDto other = (PlatformDto) obj;
 		return id == other.id && Objects.equals(name, other.name);
 	}
+	
 	
 }

@@ -5,9 +5,10 @@ import org.springframework.stereotype.Component;
 
 import be.afelio.mqu.gamify.persistence.entities.GenreEntity;
 import be.afelio.mqu.gamify.persistence.repositories.GenreRepository;
+import be.afelio.mqu.gamify.repositories.interfaces.GenreApplicationRepositoryInterface;
 
 @Component
-public class GenreApplicationRepository {	
+public class GenreApplicationRepository implements GenreApplicationRepositoryInterface {	
 	@Autowired GenreRepository genreRepository;
 
 	public GenreEntity findOneByNameIgnoreCase(String genre) {

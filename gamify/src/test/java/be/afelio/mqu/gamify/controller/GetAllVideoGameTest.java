@@ -20,7 +20,7 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 
 import be.afelio.mqu.gamify.api.dto.ResponseDto;
 import be.afelio.mqu.gamify.api.dto.ResponseDtoStatus;
-import be.afelio.mqu.gamify.api.dto.classic.VideogameDto;
+import be.afelio.mqu.gamify.api.dto.total.VideogameDto;
 import be.afelio.mqu.gamify.persistence.entities.EditorEntity;
 import be.afelio.mqu.gamify.persistence.entities.GenreEntity;
 import be.afelio.mqu.gamify.persistence.entities.PegiEntity;
