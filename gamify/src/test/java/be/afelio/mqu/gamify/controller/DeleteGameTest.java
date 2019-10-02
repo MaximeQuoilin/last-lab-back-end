@@ -24,48 +24,49 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import be.afelio.mqu.gamify.api.dto.ResponseDto;
 import be.afelio.mqu.gamify.api.dto.ResponseDtoStatus;
 import be.afelio.mqu.gamify.api.dto.classic.UserDto;
+import be.afelio.mqu.gamify.api.dto.classic.VideogameDto;
+
+
 
 
 @RunWith(SpringRunner.class)
 @SpringBootTest(webEnvironment=WebEnvironment.RANDOM_PORT)
-public class DeleteUserTest {
-
+public class DeleteGameTest {
+	
 	@Autowired TestRestTemplate restTemplate;
 	@Autowired JdbcTemplate jdbcTemplate;
-	
 	ObjectMapper mapper = new ObjectMapper();
 	
-	
 	@Test
-	public void testDeleteOneWithoutGame() throws Exception {
-		
+	public void test() throws Exception {
 		try {
-			
-			RequestEntity<UserDto> requestEntity 
-			= new RequestEntity<UserDto>(HttpMethod.DELETE, URI.create("/user/3"));
+			RequestEntity<VideogameDto> requestEntity
+			= new RequestEntity<VideogameDto>(HttpMethod.DELETE, URI.create("/videogame/20"));
 			ResponseEntity<String> response = restTemplate.exchange(requestEntity, String.class);
-			assertEquals(200, response.getStatusCodeValue());
+			assertEquals(200,response.getStatusCodeValue());
 			String json = response.getBody();
 			TypeReference<ResponseDto<Void>> type = new TypeReference<ResponseDto<Void>>() {};
 			ResponseDto<Void> responseDto = mapper.readValue(json, type);
 			
 			assertEquals(ResponseDtoStatus.SUCCESS, responseDto.getStatus());
-			assertTrue(checkUserDeleted());
+			assertTrue(checkGameDeleted());
 			
 		} finally {
-			jdbcTemplate.update("INSERT INTO tuser (id, username, password,email) "
-					+ "VALUES (3,'maximus', 'decimus', 'maximus@coliseum.rom')");
+			jdbcTemplate.update("INSERT INTO videogame (id, name, description, editor, genre) "
+					+ "VALUES (20,'Call of duty', 'War game', 2, 1)");
+			jdbcTemplate.update("INSERT INTO has_pegi (videogame_id, pegi_id) VALUES (20, 1)");
+			jdbcTemplate.update("INSERT INTO existon (videogame_id, platform_id) VALUES (20,1)");
+			jdbcTemplate.update("INSERT INTO existon (videogame_id, platform_id) VALUES (20,2)");
+			jdbcTemplate.update("INSERT INTO existon (videogame_id, platform_id) VALUES (20,3)");
 		}
 		
 		
 	}
 
-	boolean checkUserDeleted() {
+	boolean checkGameDeleted() {
 		boolean deleted = false;
 		try {
-			jdbcTemplate.queryForObject("SELECT id FROM tuser WHERE username = 'maximus'", Integer.class);
-			// si query ne renvoie rien => exception => catchee => deleted passe a true
-			// sinon deleted reste a false
+			jdbcTemplate.queryForObject("SELECT id FROM videogame WHERE name = 'Call of duty'", Integer.class);
 		} catch (EmptyResultDataAccessException e) {
 			deleted = true;
 		}
@@ -76,7 +77,7 @@ public class DeleteUserTest {
 	public void testUnknownId() throws Exception {
 
 		RequestEntity<UserDto> requestEntity 
-		= new RequestEntity<UserDto>(HttpMethod.DELETE, URI.create("/user/100000"));
+		= new RequestEntity<UserDto>(HttpMethod.DELETE, URI.create("/videogame/100000"));
 		ResponseEntity<String> response = restTemplate.exchange(requestEntity, String.class);
 		assertEquals(200, response.getStatusCodeValue());
 		String json = response.getBody();
@@ -84,7 +85,6 @@ public class DeleteUserTest {
 		ResponseDto<Void> responseDto = mapper.readValue(json, type);
 		
 		assertEquals(ResponseDtoStatus.FAILURE, responseDto.getStatus());
-		assertEquals("user not found",responseDto.getMessage());
+		assertEquals("videogame not found",responseDto.getMessage());
 	}
-	
 }

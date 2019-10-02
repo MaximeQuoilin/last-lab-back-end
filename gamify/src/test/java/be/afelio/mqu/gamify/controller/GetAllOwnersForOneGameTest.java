@@ -20,6 +20,7 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import be.afelio.mqu.gamify.api.dto.ResponseDto;
 import be.afelio.mqu.gamify.api.dto.ResponseDtoStatus;
 import be.afelio.mqu.gamify.api.dto.classic.UserDto;
+import be.afelio.mqu.gamify.api.dto.simple.UserSimpleDto;
 import be.afelio.mqu.gamify.test_utils.Utils;
 
 
@@ -34,21 +35,21 @@ public class GetAllOwnersForOneGameTest {
 	
 	@Test
 	public void testOwnersOfGameId21() throws Exception {
-		ResponseEntity<String> response = restTemplate.getForEntity("/videogame/21/owners", String.class); 
+		ResponseEntity<String> response = restTemplate.getForEntity("/videogame/21/users", String.class); 
 		assertEquals(200, response.getStatusCodeValue());
 		
 		String json = response.getBody();
-		TypeReference<ResponseDto<List<UserDto>>> type = new TypeReference<ResponseDto<List<UserDto>>>() {};
-		ResponseDto<List<UserDto>> responseDto = mapper.readValue(json, type);
+		TypeReference<ResponseDto<List<UserSimpleDto>>> type = new TypeReference<ResponseDto<List<UserSimpleDto>>>() {};
+		ResponseDto<List<UserSimpleDto>> responseDto = mapper.readValue(json, type);
 		
 		assertEquals(ResponseDtoStatus.SUCCESS, responseDto.getStatus());
-		List<UserDto> actual = responseDto.getPayload();
+		List<UserSimpleDto> actual = responseDto.getPayload();
 		assertEquals(actual, utils.createListOwnersOfVideogame(21));
 	}
 	
 	@Test
 	public void testGameWithoutOwner() throws Exception {
-		ResponseEntity<String> response = restTemplate.getForEntity("/videogame/25/owners", String.class); 
+		ResponseEntity<String> response = restTemplate.getForEntity("/videogame/25/users", String.class); 
 		assertEquals(200, response.getStatusCodeValue());
 		
 		String json = response.getBody();

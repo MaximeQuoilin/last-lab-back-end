@@ -3,7 +3,7 @@ package be.afelio.mqu.gamify.controller;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertTrue;
 
-import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 
 import org.junit.Test;
@@ -46,7 +46,10 @@ public class GetAllVideoGameTest {
 		
 		List<VideogameDto> actual = responseDto.getPayload();
 		assertTrue(actual.size() == 2);
-		assertEquals(actual, utils.createListVideoGameDto());
+		List<VideogameDto> expected = utils.createListVideoGameDto();
+		Collections.sort(actual, (a, b) -> a.getName().compareTo(b.getName()));
+		Collections.sort(expected, (a, b) -> a.getName().compareTo(b.getName()));
+		assertEquals(actual, expected);
 		
 	}
 }
