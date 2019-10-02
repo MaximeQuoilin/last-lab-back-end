@@ -17,15 +17,16 @@ import be.afelio.mqu.gamify.api.dto.ResponseDto;
 import be.afelio.mqu.gamify.api.dto.ResponseDtoStatus;
 import be.afelio.mqu.gamify.api.dto.classic.VideogameDto;
 import be.afelio.mqu.gamify.api.dto.create.CreateVideogameDto;
-import be.afelio.mqu.gamify.api.dto.simple.UserSimpleDto;
 import be.afelio.mqu.gamify.api.exceptions.duplicate.DuplicateVideogameException;
 import be.afelio.mqu.gamify.api.exceptions.notFound.VideogameNotFoundException;
+import be.afelio.mqu.gamify.repositories.interfaces.VideogameApplicationRepositoryInterface;
 
 @Controller
 @RequestMapping(value="videogame")
 public class VideogameController {
-	@Autowired VideogameControllerRepository repository;
 	
+	@Autowired VideogameApplicationRepositoryInterface repository;
+		
 	@CrossOrigin(origins = "http://localhost:4200")
 	@PostMapping(produces=MediaType.APPLICATION_JSON_VALUE, consumes=MediaType.APPLICATION_JSON_VALUE)
 	public ResponseEntity<ResponseDto<Void>>  createUser(
@@ -63,28 +64,6 @@ public class VideogameController {
 			}
 		} catch(Exception e) {
 			dto = new ResponseDto<List<VideogameDto>>(ResponseDtoStatus.FAILURE, "unexpected exception");
-			e.printStackTrace();
-		}
-		
-		return ResponseEntity.ok(dto);
-	}
-	
-	@CrossOrigin(origins = "http://localhost:4200")
-	@GetMapping(value="/{id}/users", produces=MediaType.APPLICATION_JSON_VALUE)
-	public ResponseEntity<ResponseDto<List<UserSimpleDto>>> findAllUsersForOneVideoGame(
-			@PathVariable("id") Integer id) {
-		
-		ResponseDto<List<UserSimpleDto>> dto = null;
-		try {
-			List<UserSimpleDto> users = repository.findAllUsersForOneVideoGame(id);
-			if (users.isEmpty()) {
-				dto = new ResponseDto<List<UserSimpleDto>>(ResponseDtoStatus.SUCCESS, "no user for that game");
-			} else {
-				dto = new ResponseDto<List<UserSimpleDto>>(ResponseDtoStatus.SUCCESS, users.size() +  " users found");
-			}
-			dto.setPayload(users);
-		} catch(Exception e) {
-			dto = new ResponseDto<List<UserSimpleDto>>(ResponseDtoStatus.FAILURE, "unexpected exception");
 			e.printStackTrace();
 		}
 		

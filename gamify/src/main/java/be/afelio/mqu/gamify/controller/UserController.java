@@ -20,19 +20,20 @@ import be.afelio.mqu.gamify.api.dto.ResponseDtoStatus;
 import be.afelio.mqu.gamify.api.dto.classic.UserDto;
 import be.afelio.mqu.gamify.api.dto.create.AddNewGameToUserDto;
 import be.afelio.mqu.gamify.api.dto.create.CreateUserDto;
+import be.afelio.mqu.gamify.api.dto.simple.UserSimpleDto;
 import be.afelio.mqu.gamify.api.dto.update.UpdateUserDto;
 import be.afelio.mqu.gamify.api.exceptions.UserAlreadyOwnsGameException;
 import be.afelio.mqu.gamify.api.exceptions.duplicate.DuplicatedEmailException;
 import be.afelio.mqu.gamify.api.exceptions.duplicate.DuplicatedUsernameException;
 import be.afelio.mqu.gamify.api.exceptions.notFound.UserNotFoundException;
 import be.afelio.mqu.gamify.api.exceptions.notFound.VideogameNotFoundException;
-import be.afelio.mqu.gamify.persistence.repositories.UserControllerRepository;
+import be.afelio.mqu.gamify.repositories.interfaces.UserApplicationRepositoryInterface;
 
 @Controller
 @RequestMapping(value = "user")
 public class UserController {
 	@Autowired
-	UserControllerRepository repository;
+	UserApplicationRepositoryInterface repository;
 
 	@CrossOrigin(origins = "http://localhost:4200")
 	@PostMapping(value="add-game", produces = MediaType.APPLICATION_JSON_VALUE, consumes = MediaType.APPLICATION_JSON_VALUE)
@@ -98,6 +99,28 @@ public class UserController {
 			e.printStackTrace();
 		}
 
+		return ResponseEntity.ok(dto);
+	}
+	
+	@CrossOrigin(origins = "http://localhost:4200")
+	@GetMapping(value="/{id}/users", produces=MediaType.APPLICATION_JSON_VALUE)
+	public ResponseEntity<ResponseDto<List<UserSimpleDto>>> findAllUsersForOneVideoGame(
+			@PathVariable("id") Integer id) {
+		
+		ResponseDto<List<UserSimpleDto>> dto = null;
+		try {
+			List<UserSimpleDto> users = repository.findAllUsersForOneVideoGame(id);
+			if (users.isEmpty()) {
+				dto = new ResponseDto<List<UserSimpleDto>>(ResponseDtoStatus.SUCCESS, "no user for that game");
+			} else {
+				dto = new ResponseDto<List<UserSimpleDto>>(ResponseDtoStatus.SUCCESS, users.size() +  " users found");
+			}
+			dto.setPayload(users);
+		} catch(Exception e) {
+			dto = new ResponseDto<List<UserSimpleDto>>(ResponseDtoStatus.FAILURE, "unexpected exception");
+			e.printStackTrace();
+		}
+		
 		return ResponseEntity.ok(dto);
 	}
 	

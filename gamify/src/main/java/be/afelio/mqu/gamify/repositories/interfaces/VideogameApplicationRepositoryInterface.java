@@ -1,21 +1,23 @@
-package be.afelio.mqu.gamify.controller;
+package be.afelio.mqu.gamify.repositories.interfaces;
 
 import java.util.List;
 
 import be.afelio.mqu.gamify.api.dto.classic.VideogameDto;
 import be.afelio.mqu.gamify.api.dto.create.CreateVideogameDto;
-import be.afelio.mqu.gamify.api.dto.simple.UserSimpleDto;
+import be.afelio.mqu.gamify.persistence.entities.VideogameEntity;
 
-public interface VideogameControllerRepository {
+public interface VideogameApplicationRepositoryInterface {
 
 	void createVideogame(CreateVideogameDto createVideogameDto);
 
 	List<VideogameDto> findAllVideogames();
 
-	List<UserSimpleDto> findAllUsersForOneVideoGame(Integer id);
-
 	VideogameDto findOneVideoGameById(Integer id);
 
 	void deleteVideogame(Integer id);
+
+	VideogameEntity findOneByNameIgnoreCase(String nameGame);
+
+	VideogameEntity findOneById(Integer id);
 
 }
