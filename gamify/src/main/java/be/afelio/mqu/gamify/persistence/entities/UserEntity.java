@@ -26,7 +26,7 @@ public class UserEntity {
 	@Column(name="email")
 	private String email;
 	
-	@OneToMany(mappedBy="tuser_id", fetch=FetchType.LAZY)
+	@OneToMany(mappedBy="user", fetch=FetchType.LAZY)
 	private List<VideogameEntity> videogames;
 
 	public UserEntity(int id, String username, List<VideogameEntity> videogames) {

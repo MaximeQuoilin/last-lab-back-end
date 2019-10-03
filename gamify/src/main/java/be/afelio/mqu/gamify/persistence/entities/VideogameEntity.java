@@ -57,6 +57,7 @@ public class VideogameEntity {
 			)
 	private List<PlatformEntity> platforms;
 	
+	@ManyToOne
 	@JoinColumn(name="tuser_id")
 	private UserEntity user;
 	
