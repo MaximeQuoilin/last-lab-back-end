@@ -29,7 +29,7 @@ public class VideogameController {
 		
 	@CrossOrigin(origins = "http://localhost:4200")
 	@PostMapping(produces=MediaType.APPLICATION_JSON_VALUE, consumes=MediaType.APPLICATION_JSON_VALUE)
-	public ResponseEntity<ResponseDto<Void>>  createUser(
+	public ResponseEntity<ResponseDto<Void>> createUser(
 			@RequestBody CreateVideogameDto createVideogameDto
 			) {
 		ResponseDto<Void> dto = null;
@@ -71,7 +71,7 @@ public class VideogameController {
 	}
 	
 	@CrossOrigin(origins = "http://localhost:4200")
-	@GetMapping(value="/{id}", produces=MediaType.APPLICATION_JSON_VALUE)
+	@GetMapping(value="{id}", produces=MediaType.APPLICATION_JSON_VALUE)
 	public ResponseEntity<ResponseDto<VideogameDto>> findOneVideoGameById(
 			@PathVariable("id") Integer id) {
 		
