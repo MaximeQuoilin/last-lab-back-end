@@ -8,9 +8,7 @@ import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
-import javax.persistence.JoinColumn;
-import javax.persistence.JoinTable;
-import javax.persistence.ManyToMany;
+import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
 @Entity(name="user")
@@ -28,12 +26,7 @@ public class UserEntity {
 	@Column(name="email")
 	private String email;
 	
-	@ManyToMany(fetch=FetchType.LAZY)
-	@JoinTable(
-			name="owns",
-			joinColumns=@JoinColumn(name="user_id"),
-			inverseJoinColumns=@JoinColumn(name="videogame_id")
-			)
+	@OneToMany(mappedBy="tuser_id", fetch=FetchType.LAZY)
 	private List<VideogameEntity> videogames;
 
 	public UserEntity(int id, String username, List<VideogameEntity> videogames) {
