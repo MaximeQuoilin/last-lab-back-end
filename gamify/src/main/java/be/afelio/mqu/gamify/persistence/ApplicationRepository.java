@@ -69,10 +69,10 @@ public class ApplicationRepository implements VideogameControllerRepository, Use
 
 	public void createUser(CreateUserDto createUserDto) {
 		String username = createUserDto.getUsername();
-		String password = createUserDto.getPassword();
+//		String password = createUserDto.getPassword();
 		String email = createUserDto.getEmail();
 		
-		if (username == null || username.isBlank() || password == null || password.isBlank() 
+		if (username == null || username.isBlank() // || password == null || password.isBlank() 
 				|| email == null || email.isBlank()) {
 			throw new InvalidParametrersException();
 		}
@@ -82,7 +82,7 @@ public class ApplicationRepository implements VideogameControllerRepository, Use
 		if (userRepository.findOneByEmailIgnoreCase(email) != null) {
 			throw new DuplicatedEmailException();
 		}
-		UserEntity user = new UserEntity(username, password, email);
+		UserEntity user = new UserEntity(username, /*password*/ null, email);
 		
 		userRepository.save(user);
 	}
