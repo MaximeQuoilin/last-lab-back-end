@@ -57,13 +57,8 @@ public class VideogameEntity {
 			)
 	private List<PlatformEntity> platforms;
 	
-	@ManyToMany(fetch=FetchType.LAZY)
-	@JoinTable(
-			name="owns",
-			joinColumns=@JoinColumn(name="videogame_id"),
-			inverseJoinColumns=@JoinColumn(name="user_id")
-			)
-	private List<UserEntity> users;
+	@JoinColumn(name="tuser_id")
+	private UserEntity user;
 	
 	
 	public VideogameEntity() {	}
@@ -149,6 +144,14 @@ public class VideogameEntity {
 		this.platforms = platforms;
 	}
 
+	public UserEntity getUser() {
+		return user;
+	}
+
+	public void setUser(UserEntity user) {
+		this.user = user;
+	}
+
 	public Integer getRating() {
 		return rating;
 	}
@@ -157,12 +160,5 @@ public class VideogameEntity {
 		this.rating = rating;
 	}
 
-	public List<UserEntity> getUsers() {
-		return users;
-	}
-
-	public void setUsers(List<UserEntity> users) {
-		this.users = users;
-	}
 	
 }

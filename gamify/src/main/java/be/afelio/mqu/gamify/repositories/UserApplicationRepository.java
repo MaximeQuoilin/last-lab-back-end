@@ -68,9 +68,10 @@ public class UserApplicationRepository implements UserApplicationRepositoryInter
 		List<UserEntity> users = userRepository.findAll();
 		return dtoBuilder.createListUsersDto(users);
 	}
+	
 	@Transactional
 	@Override
-	public List<UserSimpleDto> findAllUsersForOneVideoGame(Integer id) {
+	public UserSimpleDto findUserForOneVideoGame(Integer id) {
 
 		if (id == null || id < 1) {
 			throw new InvalidParameterException();
@@ -81,11 +82,11 @@ public class UserApplicationRepository implements UserApplicationRepositoryInter
 			throw new VideogameNotFoundException();
 		}
 		
-		List<UserSimpleDto> usersSimpleDto = null;
+		UserSimpleDto userSimpleDto = null;
 
-		usersSimpleDto = dtoBuilder.createListUsersSimpleDto(videogame.getUsers());
+		userSimpleDto = new UserSimpleDto(videogame.getUser());
 
-		return usersSimpleDto;
+		return userSimpleDto;
 	}
 
 	@Override
@@ -144,6 +145,9 @@ public class UserApplicationRepository implements UserApplicationRepositoryInter
 		UserEntity user = userRepository.findOneById(id);
 		if (user == null) {
 			throw new UserNotFoundException();
+		}
+		if(!user.getVideogames().isEmpty()) {
+			//throw new UnbreackableLinkException();
 		}
 		userRepository.delete(user);
 	}

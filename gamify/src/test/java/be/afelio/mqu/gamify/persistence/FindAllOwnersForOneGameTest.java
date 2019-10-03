@@ -4,8 +4,6 @@ import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertTrue;
 
 import java.security.InvalidParameterException;
-import java.util.List;
-
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -35,23 +33,23 @@ public class FindAllOwnersForOneGameTest {
 
 	@Test
 	public void testOwnersOfGameId21() {
-		List<UserSimpleDto> actual = repo.findAllUsersForOneVideoGame(21);
+		UserSimpleDto actual = repo.findUserForOneVideoGame(21);
 		assertEquals(actual, utils.createListOwnersOfVideogame(21));
 	}
 
 	@Test
 	public void testGameWithoutOwner() {
-		List<UserSimpleDto> actual = repo.findAllUsersForOneVideoGame(24);
-		assertTrue(actual.isEmpty());
+		UserSimpleDto actual = repo.findUserForOneVideoGame(24);
+		assertTrue(actual == null);
 	}
 
 	@Test(expected = InvalidParameterException.class)
 	public void testGameWithInvalidParameters() {
-		repo.findAllUsersForOneVideoGame(null);
+		repo.findUserForOneVideoGame(null);
 	}
 
 	@Test(expected = VideogameNotFoundException.class)
 	public void testInexistingGame() {
-		repo.findAllUsersForOneVideoGame(100000);
+		repo.findUserForOneVideoGame(100000);
 	}
 }

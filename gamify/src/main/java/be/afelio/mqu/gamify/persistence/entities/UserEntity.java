@@ -25,9 +25,6 @@ public class UserEntity {
 	@Column(name="username")
 	private String username;
 	
-	@Column(name="password")
-	private String password;
-	
 	@Column(name="email")
 	private String email;
 	
@@ -39,10 +36,9 @@ public class UserEntity {
 			)
 	private List<VideogameEntity> videogames;
 
-	public UserEntity(int id, String username, String password, List<VideogameEntity> videogames) {
+	public UserEntity(int id, String username, List<VideogameEntity> videogames) {
 		this.id = id;
 		this.username = username;
-		this.password = password;
 		this.videogames = videogames;
 	}
 
@@ -52,7 +48,6 @@ public class UserEntity {
 	public UserEntity(String username, String password, String email) {
 		super();
 		this.username = username;
-		this.password = password;
 		this.email = email;
 	}
 
@@ -72,14 +67,6 @@ public class UserEntity {
 		this.username = username;
 	}
 
-	public String getPassword() {
-		return password;
-	}
-
-	public void setPassword(String password) {
-		this.password = password;
-	}
-
 	public List<VideogameEntity> getVideogames() {
 		return videogames;
 	}
@@ -95,7 +82,5 @@ public class UserEntity {
 	public void setEmail(String email) {
 		this.email = email;
 	}
-	
-	
-	
+
 }

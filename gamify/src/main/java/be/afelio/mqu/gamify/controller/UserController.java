@@ -100,26 +100,26 @@ public class UserController {
 
 	@CrossOrigin(origins = "http://localhost:4200")
 	@GetMapping(value = "/{id}/owners", produces = MediaType.APPLICATION_JSON_VALUE)
-	public ResponseEntity<ResponseDto<List<UserSimpleDto>>> findAllUsersForOneVideoGame(
+	public ResponseEntity<ResponseDto<UserSimpleDto>> findUserForOneVideoGame(
 			@PathVariable("id") Integer id) {
 
-		ResponseDto<List<UserSimpleDto>> dto = null;
+		ResponseDto<UserSimpleDto> dto = null;
 		try {
-			List<UserSimpleDto> users = repository.findAllUsersForOneVideoGame(id);
-			if (users.isEmpty()) {
-				dto = new ResponseDto<List<UserSimpleDto>>(ResponseDtoStatus.SUCCESS, "no user for that game");
+			UserSimpleDto user = repository.findUserForOneVideoGame(id);
+			if (user == null) {
+				dto = new ResponseDto<UserSimpleDto>(ResponseDtoStatus.SUCCESS, "no user for that game");
 			}
 
 			else {
-				dto = new ResponseDto<List<UserSimpleDto>>(ResponseDtoStatus.SUCCESS, users.size() + " users found");
+				dto = new ResponseDto<UserSimpleDto>(ResponseDtoStatus.SUCCESS, " users found");
 			}
-			dto.setPayload(users);
+			dto.setPayload(user);
 		} 
 		catch (VideogameNotFoundException e) {
-			dto = new ResponseDto<List<UserSimpleDto>>(ResponseDtoStatus.FAILURE, "Videogame not found");
+			dto = new ResponseDto<UserSimpleDto>(ResponseDtoStatus.FAILURE, "Videogame not found");
 		}
 		catch (Exception e) {
-			dto = new ResponseDto<List<UserSimpleDto>>(ResponseDtoStatus.FAILURE, "unexpected exception");
+			dto = new ResponseDto<UserSimpleDto>(ResponseDtoStatus.FAILURE, "unexpected exception");
 			e.printStackTrace();
 		}
 

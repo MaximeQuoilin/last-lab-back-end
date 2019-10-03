@@ -50,8 +50,8 @@ public class Utils {
 		
 	}
 	
-	public List<UserSimpleDto> createListOwnersOfVideogame(int gameId){
-		return  repo.findAllUsersForOneVideoGame(gameId);		
+	public UserSimpleDto createListOwnersOfVideogame(int gameId){
+		return  repo.findUserForOneVideoGame(gameId);		
 	}
 	
 	

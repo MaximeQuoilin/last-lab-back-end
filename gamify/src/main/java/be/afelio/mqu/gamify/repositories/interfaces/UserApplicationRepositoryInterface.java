@@ -14,7 +14,7 @@ public interface UserApplicationRepositoryInterface {
 
 	List<UserDto> findAllUser();
 	
-	List<UserSimpleDto> findAllUsersForOneVideoGame(Integer id);
+	UserSimpleDto findUserForOneVideoGame(Integer id);
 	
 	void createUser(CreateUserDto createUserDto);
 
