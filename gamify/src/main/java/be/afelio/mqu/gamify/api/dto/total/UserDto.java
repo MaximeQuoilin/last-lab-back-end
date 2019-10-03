@@ -8,6 +8,11 @@ import be.afelio.mqu.gamify.persistence.entities.UserEntity;
 import be.afelio.mqu.gamify.persistence.entities.VideogameEntity;
 
 public class UserDto {
+	@Override
+	public String toString() {
+		return "UserDto [id=" + id + ", username=" + username + ", email=" + email + ", videogames=" + videogames + "]";
+	}
+
 	private int id;
 	private String username;
 	private String email;

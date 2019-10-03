@@ -45,9 +45,6 @@ public class DtoBuilder {
 		for (UserEntity userEntity : users) {
 			usersSimpleDto.add(new UserSimpleDto(userEntity));
 		}
-		if (usersSimpleDto.size() == 0) {
-			usersSimpleDto = null;
-		}
 		return usersSimpleDto;
 	}
 }

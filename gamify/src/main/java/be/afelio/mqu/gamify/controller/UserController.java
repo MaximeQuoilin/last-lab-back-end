@@ -99,7 +99,7 @@ public class UserController {
 	}
 
 	@CrossOrigin(origins = "http://localhost:4200")
-	@GetMapping(value = "/{id}/users", produces = MediaType.APPLICATION_JSON_VALUE)
+	@GetMapping(value = "/{id}/owners", produces = MediaType.APPLICATION_JSON_VALUE)
 	public ResponseEntity<ResponseDto<List<UserSimpleDto>>> findAllUsersForOneVideoGame(
 			@PathVariable("id") Integer id) {
 

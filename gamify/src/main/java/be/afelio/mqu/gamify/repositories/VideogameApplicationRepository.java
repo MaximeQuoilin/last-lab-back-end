@@ -4,6 +4,7 @@ import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
+import org.springframework.transaction.annotation.Transactional;
 
 import be.afelio.mqu.gamify.api.dto.create.CreateVideogameDto;
 import be.afelio.mqu.gamify.api.dto.total.VideogameDto;
@@ -65,6 +66,7 @@ public class VideogameApplicationRepository implements VideogameApplicationRepos
 	}
 
 	@Override
+	@Transactional
 	public List<VideogameDto> findAllVideogames() {
 		List<VideogameEntity> videogames = videogameRepository.findAll();
 		return dtoBuilder.createListVideoGameDto(videogames);
@@ -96,7 +98,6 @@ public class VideogameApplicationRepository implements VideogameApplicationRepos
 
 	@Override
 	public VideogameEntity findOneById(Integer id) {
-		// TODO Better to throw exception here ? 
 		return videogameRepository.findOneById(id);
 	}
 

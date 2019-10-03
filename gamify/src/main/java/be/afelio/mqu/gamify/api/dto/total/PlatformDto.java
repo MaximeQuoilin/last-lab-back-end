@@ -3,6 +3,10 @@ package be.afelio.mqu.gamify.api.dto.total;
 import java.util.Objects;
 
 public class PlatformDto {
+	@Override
+	public String toString() {
+		return "PlatformDto [id=" + id + ", name=" + name + "]";
+	}
 	private int id;
 	private String name;
 	public PlatformDto(int id, String name) {

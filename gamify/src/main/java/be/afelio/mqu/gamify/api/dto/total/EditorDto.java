@@ -4,6 +4,10 @@ import java.util.Objects;
 
 public class EditorDto {
 
+	@Override
+	public String toString() {
+		return "EditorDto [id=" + id + ", name=" + name + "]";
+	}
 	private int id;
 	private String name;
 	public EditorDto(int id, String name) {

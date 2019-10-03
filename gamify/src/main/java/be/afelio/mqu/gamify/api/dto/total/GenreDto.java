@@ -43,5 +43,10 @@ public class GenreDto {
 		GenreDto other = (GenreDto) obj;
 		return id == other.id && Objects.equals(name, other.name);
 	}
+	@Override
+	public String toString() {
+		return "GenreDto [id=" + id + ", name=" + name + "]";
+	}
+	
 	
 }

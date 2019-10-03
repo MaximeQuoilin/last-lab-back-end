@@ -41,7 +41,7 @@ public class VideogameEntity {
 	@JoinColumn(name="genre")
 	private GenreEntity genre;
 	
-	@ManyToMany
+	@ManyToMany(fetch=FetchType.LAZY)
 	@JoinTable(
 			name="has_pegi",
 			joinColumns=@JoinColumn(name="videogame_id"),
@@ -49,7 +49,7 @@ public class VideogameEntity {
 			)
 	private List<PegiEntity> pegis;
 	
-	@ManyToMany
+	@ManyToMany(fetch=FetchType.LAZY)
 	@JoinTable(
 			name="existon",
 			joinColumns=@JoinColumn(name="videogame_id"),

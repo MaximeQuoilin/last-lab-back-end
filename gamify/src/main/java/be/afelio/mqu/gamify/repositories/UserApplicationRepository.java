@@ -5,6 +5,7 @@ import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
+import org.springframework.transaction.annotation.Transactional;
 
 import be.afelio.mqu.gamify.api.dto.create.AddNewGameToUserDto;
 import be.afelio.mqu.gamify.api.dto.create.CreateUserDto;
@@ -27,38 +28,40 @@ import be.afelio.mqu.gamify.utils.DtoBuilder;
 @Component
 public class UserApplicationRepository implements UserApplicationRepositoryInterface {
 
-	@Autowired UserRepository userRepository;
-	
-	@Autowired VideogameApplicationRepositoryInterface videogameApplicationRepository;
-	
+	@Autowired
+	UserRepository userRepository;
+
+	@Autowired
+	VideogameApplicationRepositoryInterface videogameApplicationRepository;
+
 	private DtoBuilder dtoBuilder = new DtoBuilder();
 
 	@Override
 	public void addNewGameToUserDto(AddNewGameToUserDto addNewGameToUserDto) {
 		String nameGame = addNewGameToUserDto.getNameGame();
 		String nameUser = addNewGameToUserDto.getNameUser();
-		
+
 		if (nameGame == null || nameGame.isBlank() || nameUser == null || nameUser.isBlank()) {
 			throw new InvalidParameterException();
 		}
-		
+
 		VideogameEntity game = videogameApplicationRepository.findOneByNameIgnoreCase(nameGame);
 		if (game == null) {
 			throw new VideogameNotFoundException();
 		}
-		
+
 		UserEntity user = userRepository.findOneByUsernameIgnoreCase(nameUser);
 		if (user == null) {
 			throw new UserNotFoundException();
 		}
-		
+
 		if (user.getVideogames().contains(game)) {
 			throw new UserAlreadyOwnsGameException();
 		}
-		
+
 		user.getVideogames().add(game);
 		userRepository.save(user);
-		
+
 	}
 
 	@Override
@@ -66,23 +69,25 @@ public class UserApplicationRepository implements UserApplicationRepositoryInter
 		List<UserEntity> users = userRepository.findAll();
 		return dtoBuilder.createListUsersDto(users);
 	}
-
+	@Transactional
 	@Override
 	public List<UserSimpleDto> findAllUsersForOneVideoGame(Integer id) {
-		
+
 		if (id == null || id < 1) {
 			throw new InvalidParameterException();
 		}
-		
+
 		VideogameEntity videogame = videogameApplicationRepository.findOneById(id);
-		if (videogame== null) {
+		System.out.println(videogame);
+		if (videogame == null) {
+			System.out.println("videogame NULL");
 			throw new VideogameNotFoundException();
 		}
+		
 		List<UserSimpleDto> usersSimpleDto = null;
-		if (videogame != null) {
-			usersSimpleDto = dtoBuilder.createListUsersSimpleDto(videogame.getUsers());
-		}
-		 
+
+		usersSimpleDto = dtoBuilder.createListUsersSimpleDto(videogame.getUsers());
+
 		return usersSimpleDto;
 	}
 
@@ -91,9 +96,9 @@ public class UserApplicationRepository implements UserApplicationRepositoryInter
 		String username = createUserDto.getUsername();
 		String password = createUserDto.getPassword();
 		String email = createUserDto.getEmail();
-		
-		if (username == null || username.isBlank() || password == null || password.isBlank() 
-				|| email == null || email.isBlank()) {
+
+		if (username == null || username.isBlank() || password == null || password.isBlank() || email == null
+				|| email.isBlank()) {
 			throw new InvalidParametrersException();
 		}
 		if (userRepository.findOneByUsernameIgnoreCase(username) != null) {
@@ -103,13 +108,13 @@ public class UserApplicationRepository implements UserApplicationRepositoryInter
 			throw new DuplicatedEmailException();
 		}
 		UserEntity user = new UserEntity(username, password, email);
-		
+
 		userRepository.save(user);
 	}
 
 	@Override
 	public void updateUser(UpdateUserDto updateUserDto) {
-		
+
 		Integer id = updateUserDto.getId();
 		String username = updateUserDto.getUsername();
 		String email = updateUserDto.getEmail();
@@ -131,11 +136,11 @@ public class UserApplicationRepository implements UserApplicationRepositoryInter
 		if (tempUser != user && tempUser != null) {
 			throw new DuplicatedEmailException();
 		}
-		
+
 		user.setUsername(username);
 		user.setEmail(email);
 		userRepository.save(user);
-		
+
 	}
 
 	@Override
