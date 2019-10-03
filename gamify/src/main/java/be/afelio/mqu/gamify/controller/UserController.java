@@ -108,9 +108,7 @@ public class UserController {
 			UserSimpleDto user = repository.findUserForOneVideoGame(id);
 			if (user == null) {
 				dto = new ResponseDto<UserSimpleDto>(ResponseDtoStatus.SUCCESS, "no user for that game");
-			}
-
-			else {
+			} else {
 				dto = new ResponseDto<UserSimpleDto>(ResponseDtoStatus.SUCCESS, " users found");
 			}
 			dto.setPayload(user);

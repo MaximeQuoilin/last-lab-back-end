@@ -83,9 +83,10 @@ public class UserApplicationRepository implements UserApplicationRepositoryInter
 		}
 		
 		UserSimpleDto userSimpleDto = null;
-
-		userSimpleDto = new UserSimpleDto(videogame.getUser());
-
+		UserEntity userEntity = videogame.getUser();
+		if (userEntity != null) {
+		    userSimpleDto = new UserSimpleDto(userEntity);
+		}
 		return userSimpleDto;
 	}
 
