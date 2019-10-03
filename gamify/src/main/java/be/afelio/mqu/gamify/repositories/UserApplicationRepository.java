@@ -94,11 +94,10 @@ public class UserApplicationRepository implements UserApplicationRepositoryInter
 	@Override
 	public void createUser(CreateUserDto createUserDto) {
 		String username = createUserDto.getUsername();
-		String password = createUserDto.getPassword();
 		String email = createUserDto.getEmail();
-
-		if (username == null || username.isBlank() || password == null || password.isBlank() || email == null
-				|| email.isBlank()) {
+		
+		if (username == null || username.isBlank() 
+				|| email == null || email.isBlank()) {
 			throw new InvalidParametrersException();
 		}
 		if (userRepository.findOneByUsernameIgnoreCase(username) != null) {
@@ -107,8 +106,8 @@ public class UserApplicationRepository implements UserApplicationRepositoryInter
 		if (userRepository.findOneByEmailIgnoreCase(email) != null) {
 			throw new DuplicatedEmailException();
 		}
-		UserEntity user = new UserEntity(username, password, email);
-
+		UserEntity user = new UserEntity(username, null, email);
+		
 		userRepository.save(user);
 	}
 
