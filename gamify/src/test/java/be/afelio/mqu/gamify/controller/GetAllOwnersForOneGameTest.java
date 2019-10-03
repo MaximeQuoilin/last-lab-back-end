@@ -21,6 +21,7 @@ import be.afelio.mqu.gamify.api.dto.ResponseDto;
 import be.afelio.mqu.gamify.api.dto.ResponseDtoStatus;
 import be.afelio.mqu.gamify.api.dto.simple.UserSimpleDto;
 import be.afelio.mqu.gamify.api.dto.total.UserDto;
+import be.afelio.mqu.gamify.api.exceptions.notFound.VideogameNotFoundException;
 import be.afelio.mqu.gamify.test_utils.Utils;
 
 
@@ -60,6 +61,18 @@ public class GetAllOwnersForOneGameTest {
 		List<UserDto> actual = responseDto.getPayload();
 		assertTrue(actual.isEmpty());
 		
+	}
+	
+	@Test(expected = VideogameNotFoundException.class)
+	public void testInexistingGame() throws Exception {
+		ResponseEntity<String> response = restTemplate.getForEntity("/user/1000000/owners", String.class); 
+		assertEquals(200, response.getStatusCodeValue());
+		
+		String json = response.getBody();
+		TypeReference<ResponseDto<List<UserDto>>> type = new TypeReference<ResponseDto<List<UserDto>>>() {};
+		ResponseDto<List<UserDto>> responseDto = mapper.readValue(json, type);
+		
+		assertEquals(ResponseDtoStatus.FAILURE, responseDto.getStatus());
 	}
 	
 	

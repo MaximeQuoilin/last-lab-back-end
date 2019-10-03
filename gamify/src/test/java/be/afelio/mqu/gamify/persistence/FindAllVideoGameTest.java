@@ -29,7 +29,4 @@ public class FindAllVideoGameTest {
 		assertTrue(!list.isEmpty());
 		//assertTrue(list.size() == 2);
 	}
-	
-
-
 }

@@ -15,7 +15,6 @@ import be.afelio.mqu.gamify.api.dto.update.UpdateUserDto;
 import be.afelio.mqu.gamify.api.exceptions.UserAlreadyOwnsGameException;
 import be.afelio.mqu.gamify.api.exceptions.duplicate.DuplicatedEmailException;
 import be.afelio.mqu.gamify.api.exceptions.duplicate.DuplicatedUsernameException;
-import be.afelio.mqu.gamify.api.exceptions.invalid.InvalidParametrersException;
 import be.afelio.mqu.gamify.api.exceptions.notFound.UserNotFoundException;
 import be.afelio.mqu.gamify.api.exceptions.notFound.VideogameNotFoundException;
 import be.afelio.mqu.gamify.persistence.entities.UserEntity;
@@ -78,9 +77,7 @@ public class UserApplicationRepository implements UserApplicationRepositoryInter
 		}
 
 		VideogameEntity videogame = videogameApplicationRepository.findOneById(id);
-		System.out.println(videogame);
 		if (videogame == null) {
-			System.out.println("videogame NULL");
 			throw new VideogameNotFoundException();
 		}
 		
@@ -98,7 +95,7 @@ public class UserApplicationRepository implements UserApplicationRepositoryInter
 		
 		if (username == null || username.isBlank() 
 				|| email == null || email.isBlank()) {
-			throw new InvalidParametrersException();
+			throw new InvalidParameterException();
 		}
 		if (userRepository.findOneByUsernameIgnoreCase(username) != null) {
 			throw new DuplicatedUsernameException();
