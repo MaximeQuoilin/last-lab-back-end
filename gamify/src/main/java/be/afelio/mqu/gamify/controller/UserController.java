@@ -17,51 +17,48 @@ import org.springframework.web.bind.annotation.RequestMapping;
 
 import be.afelio.mqu.gamify.api.dto.ResponseDto;
 import be.afelio.mqu.gamify.api.dto.ResponseDtoStatus;
-import be.afelio.mqu.gamify.api.dto.classic.UserDto;
 import be.afelio.mqu.gamify.api.dto.create.AddNewGameToUserDto;
 import be.afelio.mqu.gamify.api.dto.create.CreateUserDto;
+import be.afelio.mqu.gamify.api.dto.simple.UserSimpleDto;
+import be.afelio.mqu.gamify.api.dto.total.UserDto;
 import be.afelio.mqu.gamify.api.dto.update.UpdateUserDto;
 import be.afelio.mqu.gamify.api.exceptions.UserAlreadyOwnsGameException;
 import be.afelio.mqu.gamify.api.exceptions.duplicate.DuplicatedEmailException;
 import be.afelio.mqu.gamify.api.exceptions.duplicate.DuplicatedUsernameException;
 import be.afelio.mqu.gamify.api.exceptions.notFound.UserNotFoundException;
 import be.afelio.mqu.gamify.api.exceptions.notFound.VideogameNotFoundException;
-import be.afelio.mqu.gamify.persistence.repositories.UserControllerRepository;
+import be.afelio.mqu.gamify.repositories.interfaces.UserApplicationRepositoryInterface;
 
 @Controller
 @RequestMapping(value = "user")
 public class UserController {
 	@Autowired
-	UserControllerRepository repository;
+	UserApplicationRepositoryInterface repository;
 
 	@CrossOrigin(origins = "http://localhost:4200")
-	@PostMapping(value="add-game", produces = MediaType.APPLICATION_JSON_VALUE, consumes = MediaType.APPLICATION_JSON_VALUE)
+	@PostMapping(value = "add-game", produces = MediaType.APPLICATION_JSON_VALUE, consumes = MediaType.APPLICATION_JSON_VALUE)
 	public ResponseEntity<ResponseDto<Void>> addGameToUser(@RequestBody AddNewGameToUserDto addNewGameToUserDto) {
 		ResponseDto<Void> dto = null;
 
 		try {
 			repository.addNewGameToUserDto(addNewGameToUserDto);
 			dto = new ResponseDto<Void>(ResponseDtoStatus.SUCCESS, "relation created");
-		}
-		catch (UserNotFoundException e) {
+		} catch (UserNotFoundException e) {
 			dto = new ResponseDto<Void>(ResponseDtoStatus.FAILURE, "user not found");
-		}
-		catch (VideogameNotFoundException e) {
+		} catch (VideogameNotFoundException e) {
 			dto = new ResponseDto<Void>(ResponseDtoStatus.FAILURE, "videogame not found");
-		}
-		catch (UserAlreadyOwnsGameException e) {
+		} catch (UserAlreadyOwnsGameException e) {
 			dto = new ResponseDto<Void>(ResponseDtoStatus.FAILURE, "User already own that game");
-		}
-		catch (Exception e) {
+		} catch (Exception e) {
 			e.printStackTrace();
 			dto = new ResponseDto<Void>(ResponseDtoStatus.FAILURE, "unexpected exception");
 		}
 
 		return ResponseEntity.ok(dto);
 	}
-	
+
 	@CrossOrigin(origins = "http://localhost:4200")
-	@PostMapping(value="", produces = MediaType.APPLICATION_JSON_VALUE, consumes = MediaType.APPLICATION_JSON_VALUE)
+	@PostMapping(value = "", produces = MediaType.APPLICATION_JSON_VALUE, consumes = MediaType.APPLICATION_JSON_VALUE)
 	public ResponseEntity<ResponseDto<Void>> createUser(@RequestBody CreateUserDto createUserDto) {
 		ResponseDto<Void> dto = null;
 
@@ -79,7 +76,7 @@ public class UserController {
 
 		return ResponseEntity.ok(dto);
 	}
-	
+
 	@CrossOrigin(origins = "http://localhost:4200")
 	@GetMapping(value = "all", produces = MediaType.APPLICATION_JSON_VALUE)
 	public ResponseEntity<ResponseDto<List<UserDto>>> findAll() {
@@ -100,7 +97,35 @@ public class UserController {
 
 		return ResponseEntity.ok(dto);
 	}
-	
+
+	@CrossOrigin(origins = "http://localhost:4200")
+	@GetMapping(value = "/{id}/owners", produces = MediaType.APPLICATION_JSON_VALUE)
+	public ResponseEntity<ResponseDto<List<UserSimpleDto>>> findAllUsersForOneVideoGame(
+			@PathVariable("id") Integer id) {
+
+		ResponseDto<List<UserSimpleDto>> dto = null;
+		try {
+			List<UserSimpleDto> users = repository.findAllUsersForOneVideoGame(id);
+			if (users.isEmpty()) {
+				dto = new ResponseDto<List<UserSimpleDto>>(ResponseDtoStatus.SUCCESS, "no user for that game");
+			}
+
+			else {
+				dto = new ResponseDto<List<UserSimpleDto>>(ResponseDtoStatus.SUCCESS, users.size() + " users found");
+			}
+			dto.setPayload(users);
+		} 
+		catch (VideogameNotFoundException e) {
+			dto = new ResponseDto<List<UserSimpleDto>>(ResponseDtoStatus.FAILURE, "Videogame not found");
+		}
+		catch (Exception e) {
+			dto = new ResponseDto<List<UserSimpleDto>>(ResponseDtoStatus.FAILURE, "unexpected exception");
+			e.printStackTrace();
+		}
+
+		return ResponseEntity.ok(dto);
+	}
+
 	@CrossOrigin(origins = "http://localhost:4200")
 	@PutMapping(produces = MediaType.APPLICATION_JSON_VALUE, consumes = MediaType.APPLICATION_JSON_VALUE)
 	public ResponseEntity<ResponseDto<Void>> updateCustomerEmail(@RequestBody UpdateUserDto updateUserDto) {
@@ -110,14 +135,11 @@ public class UserController {
 			dto = new ResponseDto<Void>(ResponseDtoStatus.SUCCESS, "user updated");
 		} catch (UserNotFoundException e) {
 			dto = new ResponseDto<Void>(ResponseDtoStatus.FAILURE, "user not found (invalid id)");
-		}
-		catch (DuplicatedUsernameException e) {
+		} catch (DuplicatedUsernameException e) {
 			dto = new ResponseDto<Void>(ResponseDtoStatus.FAILURE, "username not available");
-		}
-		catch (DuplicatedEmailException e) {
+		} catch (DuplicatedEmailException e) {
 			dto = new ResponseDto<Void>(ResponseDtoStatus.FAILURE, "Duplicated email");
-		}
-		catch (Exception e) {
+		} catch (Exception e) {
 			dto = new ResponseDto<Void>(ResponseDtoStatus.FAILURE, "unexpected exception");
 			e.printStackTrace();
 		}

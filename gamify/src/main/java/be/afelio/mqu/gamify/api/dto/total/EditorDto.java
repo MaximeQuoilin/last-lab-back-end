@@ -1,17 +1,21 @@
-package be.afelio.mqu.gamify.api.dto.classic;
+package be.afelio.mqu.gamify.api.dto.total;
 
 import java.util.Objects;
 
-public class GenreDto {
+public class EditorDto {
 
+	@Override
+	public String toString() {
+		return "EditorDto [id=" + id + ", name=" + name + "]";
+	}
 	private int id;
 	private String name;
-	public GenreDto(int id, String name) {
+	public EditorDto(int id, String name) {
 		super();
 		this.id = id;
 		this.name = name;
 	}
-	public GenreDto() {
+	public EditorDto() {
 		super();
 	}
 	public int getId() {
@@ -26,12 +30,10 @@ public class GenreDto {
 	public void setName(String name) {
 		this.name = name;
 	}
-	
 	@Override
 	public int hashCode() {
 		return Objects.hash(id, name);
 	}
-	
 	@Override
 	public boolean equals(Object obj) {
 		if (this == obj)
@@ -40,7 +42,7 @@ public class GenreDto {
 			return false;
 		if (getClass() != obj.getClass())
 			return false;
-		GenreDto other = (GenreDto) obj;
+		EditorDto other = (EditorDto) obj;
 		return id == other.id && Objects.equals(name, other.name);
 	}
 	

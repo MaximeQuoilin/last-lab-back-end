@@ -21,6 +21,8 @@ public class UserSimpleDto {
 		this.username = userEntity.getUsername();
 		this.email = userEntity.getEmail();
 	}
+	
+	public UserSimpleDto() {}
 
 	public String getUsername() {
 		return username;

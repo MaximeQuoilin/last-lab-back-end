@@ -1,9 +1,13 @@
-package be.afelio.mqu.gamify.api.dto.classic;
+package be.afelio.mqu.gamify.api.dto.total;
 
 import java.util.Objects;
 
 public class PegiDto {
 
+	@Override
+	public String toString() {
+		return "PegiDto [id=" + id + ", name=" + name + ", description=" + description + "]";
+	}
 	private int id;
 	private String name;
 	private String description;

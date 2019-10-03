@@ -12,9 +12,6 @@ public class CreateUserDto {
 		this.username = username;
 		this.password = password;
 	}
-	public CreateUserDto() {
-		super();
-	}
 	public String getUsername() {
 		return username;
 	}

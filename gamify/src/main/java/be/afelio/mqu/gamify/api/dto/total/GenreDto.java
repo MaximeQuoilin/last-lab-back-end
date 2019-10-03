@@ -1,16 +1,17 @@
-package be.afelio.mqu.gamify.api.dto.classic;
+package be.afelio.mqu.gamify.api.dto.total;
 
 import java.util.Objects;
 
-public class PlatformDto {
+public class GenreDto {
+
 	private int id;
 	private String name;
-	public PlatformDto(int id, String name) {
+	public GenreDto(int id, String name) {
 		super();
 		this.id = id;
 		this.name = name;
 	}
-	public PlatformDto() {
+	public GenreDto() {
 		super();
 	}
 	public int getId() {
@@ -25,10 +26,12 @@ public class PlatformDto {
 	public void setName(String name) {
 		this.name = name;
 	}
+	
 	@Override
 	public int hashCode() {
 		return Objects.hash(id, name);
 	}
+	
 	@Override
 	public boolean equals(Object obj) {
 		if (this == obj)
@@ -37,8 +40,12 @@ public class PlatformDto {
 			return false;
 		if (getClass() != obj.getClass())
 			return false;
-		PlatformDto other = (PlatformDto) obj;
+		GenreDto other = (GenreDto) obj;
 		return id == other.id && Objects.equals(name, other.name);
+	}
+	@Override
+	public String toString() {
+		return "GenreDto [id=" + id + ", name=" + name + "]";
 	}
 	
 	
